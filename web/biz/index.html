@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For enterprise — compute.wick.pics</title>
+<meta name="description" content="One market view for GPU procurement: cross-provider price discovery, negotiation-grade price history, budget alerts, and an agent-ready API. Zero fees.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/biz/">
+<meta property="og:title" content="For enterprise — compute.wick.pics">
+<meta property="og:description" content="One market view for GPU procurement: cross-provider price discovery, negotiation-grade price history, budget alerts, and an agent-ready API. Zero fees.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/biz/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:58ch}
+.stats{display:flex;flex-wrap:wrap;gap:0 40px;margin:38px 0 4px;font-family:var(--mono)}
+.stats div{padding:12px 0;min-width:120px}
+.stats b{display:block;font-size:1.25rem;font-weight:600;color:var(--ink)}
+.stats i{font-style:normal;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.point{margin-top:40px;padding-top:28px;border-top:1px solid var(--hair)}
+.point h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;letter-spacing:-0.01em}
+.point p{margin-top:10px;color:var(--ink2);max-width:62ch}
+.point p b{color:var(--ink);font-weight:600}
+.point .how{margin-top:10px;font-family:var(--mono);font-size:.74rem;color:var(--ink2)}
+.point .how a{color:var(--ink)}
+.next{margin-top:44px;padding:22px 26px;background:var(--raised);border:1px solid var(--hair)}
+.next h2{font-family:var(--serif);font-weight:600;font-size:1.2rem}
+.next p{margin-top:8px;color:var(--ink2);font-size:.95rem;max-width:62ch}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>The market view your GPU spend is missing.</h1>
+  <p class="intro">Cloud GPU pricing is negotiated in the dark: every provider quotes alone, and the spot market that undercuts them is scattered across marketplaces nobody has time to watch. This site is the whole tape in one place &mdash; live, historical, and machine-readable.</p>
+
+  <div class="stats" id="stats">
+    <div><b id="s-offers">&mdash;</b><i>live offers</i></div>
+    <div><b id="s-models">&mdash;</b><i>GPU models</i></div>
+    <div><b id="s-feeds">&mdash;</b><i>provider feeds</i></div>
+    <div><b>0</b><i>platform fees, bps</i></div>
+  </div>
+
+  <div class="point">
+    <h2>Price discovery, cross-provider.</h2>
+    <p>One ranked table normalizes marketplace hosts and cloud price lists onto the same number: <b>dollars per GPU per hour</b>. Before a reserved-contract renewal, thirty seconds here tells you what the open market charges for the same silicon.</p>
+    <p class="how">start: <a href="/#market">the live market</a> &middot; <a href="/api/offers">/api/offers</a></p>
+  </div>
+
+  <div class="point">
+    <h2>History that survives the negotiation.</h2>
+    <p>We record every provider's best and median price per GPU model, every poll, permanently. When a vendor says "that price was an anomaly", <b>the tape answers</b> &mdash; charted on the site, raw over the API.</p>
+    <p class="how">start: <a href="/#tape">the tape</a> &middot; <a href="/api/history?gpu=H100">/api/history</a></p>
+  </div>
+
+  <div class="point">
+    <h2>Alerts under your budget line.</h2>
+    <p>Arm a watch at the price your finance model assumes. When the market crosses under it, your Slack, RSS reader, or internal webhook rings &mdash; <b>no account, no vendor lock, nothing installed</b>.</p>
+    <p class="how">start: <a href="/#wire">the tripwire</a></p>
+  </div>
+
+  <div class="point">
+    <h2>Your agents are already welcome.</h2>
+    <p>Platform and FinOps teams wiring internal AI agents get the same data as native MCP tools &mdash; search, history, the idle index, watches &mdash; listed on the official MCP Registry. <b>No key, no contract, no rate negotiation.</b></p>
+    <p class="how">start: <a href="/agents/">the integration guide</a></p>
+  </div>
+
+  <div class="point">
+    <h2>Why it costs nothing.</h2>
+    <p>The platform fee is zero and every response says so (<b>fee_bps: 0</b>). Outbound provider links may carry referral tags the provider pays for; your price is unchanged. That's the whole business model, stated in one sentence.</p>
+  </div>
+
+  <div class="next">
+    <h2>On the bench, not yet shipped.</h2>
+    <p>Brokered execution is live: rentals place on <b>your own</b> provider key through one API, or via resting limit orders your own keyholder daemon fills &mdash; keys pass through a single call, custody never exists, dry-run is the default and <code>confirm</code> is the trigger, with an optional budget cap that destroys a runaway rental. Plainly: the rail is proven end-to-end in dry-run; the paid leg awaits its first funded test, and its receipts will publish at <a href="/receipts/">/receipts</a> the day it passes. Nothing on this page describes a feature that doesn't exist today.</p>
+  </div>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/eco/">the environmental case</a></div></footer>
+<script>
+fetch("/api/stats").then(r => r.json()).then(s => {
+  document.getElementById("s-offers").textContent = s.total_offers;
+  document.getElementById("s-models").textContent = s.gpu_models;
+  document.getElementById("s-feeds").textContent = Object.keys(s.providers).length;
+}).catch(() => {});
+</script>
+</body>
+</html>

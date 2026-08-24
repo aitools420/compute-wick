@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>compute.wick.pics: the moat notes</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:58ch}
+.note{margin-top:10px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+.moat{margin-top:54px;padding-top:34px;border-top:1px solid var(--hair)}
+.moat h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;letter-spacing:-0.01em}
+.moat p{margin-top:10px;color:var(--ink2);max-width:62ch}
+.moat p b{color:var(--ink);font-weight:600}
+.moat .depth{margin-top:12px;font-family:var(--mono);font-size:.72rem;color:var(--amber)}
+.moat .depth.shallow{color:var(--ink2)}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main class="wrap">
+  <h1>The moat notes.</h1>
+  <p class="intro">A working list of what defends this product as it grows, written plainly, including which moats are deep today and which are still being dug. Aggregating prices is easy to copy. These are the parts that are not.</p>
+  <p class="note">unlisted page. shared by URL only, updated as the product moves.</p>
+
+  <div class="moat">
+    <h2>Agent distribution, not agent marketing.</h2>
+    <p>The site says agents are first-class, and the product proves it: a native MCP endpoint over the same core the human UI uses, plus keyless REST. When an agent framework learns to buy compute through us once, that integration is sticky in a way a bookmark never is. <b>Every competitor sells to humans; our second customer type compounds on its own.</b></p>
+    <p class="depth">depth today: real and rare. MCP live at launch.</p>
+  </div>
+
+  <div class="moat">
+    <h2>Zero fees, held honestly, with the lever already built.</h2>
+    <p>fee_bps: 0 sits in every API response, in public. There is no margin for a competitor to undercut. Meanwhile the fee machinery exists in code from day one as a single choke point, so monetization later is a config change, not a rebuild, and the referral seam pays without touching the renter's price. <b>We can afford our zero; a VC-burn clone cannot afford theirs.</b></p>
+    <p class="depth">depth today: structural, because the cost base is one process on commodity hosting.</p>
+  </div>
+
+  <div class="moat">
+    <h2>History that cannot be backfilled.</h2>
+    <p>Every poll appends aggregate price history per GPU model and class. Whoever starts recording first owns the only copy of the past. Price charts, an idle-capacity index, volatility signals, and eventually forward pricing all grow from this table, and a late entrant simply does not have the data. <b>The moat digs itself one poll at a time.</b></p>
+    <p class="depth">depth today: shallow but deepening automatically since launch day.</p>
+  </div>
+
+  <div class="moat">
+    <h2>Honesty as a reflex, visible in the product.</h2>
+    <p>Provider health is recorded on every poll, stale data is flagged rather than hidden, and no number appears on the site that did not come from the live table. In a category where trust is the entire product, a reputation for never faking is slow to earn and very hard to copy quickly. <b>The idle share is measured, not claimed, which is exactly what enterprise ESG buyers will need on paper later.</b></p>
+    <p class="depth">depth today: a discipline more than a moat; it compounds with every week of being right.</p>
+  </div>
+
+  <div class="moat">
+    <h2>The idle-first position.</h2>
+    <p>Routing demand toward interruptible capacity gives the product a story competitors cannot borrow without rebuilding their ranking around it: cheaper for the buyer, better utilization for the host, fewer new data centers for everyone. The frog is memorable; the measurement underneath it is the defensible part.</p>
+    <p class="depth">depth today: brand-deep, measurement-backed.</p>
+  </div>
+
+  <div class="moat">
+    <h2>Breadth gets cheaper as we grow.</h2>
+    <p>A provider integration is one drop-in module against one schema. The next marketplace costs an afternoon, and each one makes the comparison table more complete and the aggregate history more valuable. Coverage is a treadmill for competitors and a flywheel for us.</p>
+    <p class="depth">depth today: proven twice; the third integration is the test.</p>
+  </div>
+
+  <div class="moat">
+    <h2>The ladder itself.</h2>
+    <p>Aggregator, then index, then broker, then clearing layer, then exchange. Each stage is funded by the one before it and seeds the next stage's users. A competitor can copy any single rung; copying the sequence requires having climbed it. <b>By the time fees turn on, the audience that would resent them is the audience we already served for free.</b></p>
+    <p class="depth">depth today: a plan, honestly. Ladders are moats only when climbed.</p>
+  </div>
+
+  <div class="moat">
+    <h2>What is deliberately not on this list.</h2>
+    <p>The ranking engine, the UI, and the aggregation itself. All three are good and all three are copyable, and pretending otherwise would corrupt the rest of the page. The defensible things above are the ones with time, data, or structure in them.</p>
+    <p class="depth shallow">kept here so we never confuse polish with protection.</p>
+  </div>
+</main>
+<footer><div class="wrap"><a href="/">back to the market</a></div></footer>
+</body>
+</html>

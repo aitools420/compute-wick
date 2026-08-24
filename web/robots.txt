@@ -1,0 +1,30 @@
+# compute.wick.pics — humans and machines both welcome.
+# Machine guide: https://compute.wick.pics/llms.txt
+# API (no key): https://compute.wick.pics/api/openapi.json
+
+User-agent: *
+Allow: /
+
+# AI crawlers are explicitly welcome — the site is built for agents.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://compute.wick.pics/sitemap.xml

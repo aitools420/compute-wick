@@ -1,0 +1,10 @@
+{"vm": {"machineTypes": [
+  {"dataCenterId": "no-kristiansand-1", "machineType": "epyc-genoa-a100-pcie", "gpuModel": "A100 80GB PCIe", "gpuModelId": "nvidia-a100-pcie", "vcpuPriceHr": {"value": "0.004900"}, "memoryGibPriceHr": {"value": "0.004900"}, "gpuPriceHr": {"value": "1.500000"}, "maxGpuFree": 6, "totalGpuFree": 12},
+  {"dataCenterId": "no-kristiansand-1", "machineType": "l40s-graphics", "gpuModel": "L40S", "gpuModelId": "nvidia-l40s", "gpuPriceHr": {"value": "0.870000"}, "totalGpuFree": 0},
+  {"dataCenterId": "se-skarholmen-1", "machineType": "cpu-only", "gpuModel": "", "gpuPriceHr": {"value": "0"}, "totalGpuFree": 0}
+]},
+"bm": {"machineTypes": [
+  {"dataCenterId": "no-kristiansand-1", "id": "sapphire-rapids-h100", "gpus": 8, "gpuModelId": "nvidia-h100", "prices": [{"commitmentTerm": "COMMITMENT_TERM_NONE", "priceHr": {"value": "14.320000"}}], "machinesFree": 1},
+  {"dataCenterId": "se-skarholmen-1", "id": "l40s-8x", "gpus": 8, "gpuModelId": "nvidia-l40s", "prices": [{"commitmentTerm": "COMMITMENT_TERM_NONE", "priceHr": {"value": "6.000000"}}], "machinesFree": 0}
+]},
+"gpus": {"gpuModels": [{"id": "nvidia-a100-pcie", "memoryGib": 80}, {"id": "nvidia-h100", "memoryGib": 80}, {"id": "nvidia-l40s", "memoryGib": 48}]}}

@@ -1,0 +1,64 @@
+{
+  "flavors": {
+    "status": true,
+    "message": "Getting flavors successful",
+    "data": [
+      {
+        "gpu": "A100-80G-PCIe",
+        "region_name": "NORWAY-1",
+        "flavors": [
+          {"id": 1, "name": "n1-A100x4", "region_name": "NORWAY-1", "cpu": 124,
+           "ram": 480.0, "disk": 100, "gpu": "A100-80G-PCIe", "gpu_count": 4,
+           "stock_available": true},
+          {"id": 2, "name": "n1-A100x8-out", "region_name": "NORWAY-1", "cpu": 252,
+           "ram": 960.0, "disk": 100, "gpu": "A100-80G-PCIe", "gpu_count": 8,
+           "stock_available": false}
+        ]
+      },
+      {
+        "gpu": "L40-spot",
+        "region_name": "CANADA-1",
+        "flavors": [
+          {"id": 3, "name": "n3-L40x1-spot", "region_name": "CANADA-1", "cpu": 28,
+           "ram": 58.0, "disk": 100, "gpu": "L40-spot", "gpu_count": 1,
+           "stock_available": true}
+        ]
+      },
+      {
+        "gpu": "",
+        "region_name": "NORWAY-1",
+        "flavors": [
+          {"id": 4, "name": "n1-cpu-small", "region_name": "NORWAY-1", "cpu": 4,
+           "ram": 4.0, "disk": 100, "gpu": "", "gpu_count": 0,
+           "stock_available": true}
+        ]
+      },
+      {
+        "gpu": "B300-SXM",
+        "region_name": "US-1",
+        "flavors": [
+          {"id": 5, "name": "n2-B300x8-unpriced", "region_name": "US-1", "cpu": 224,
+           "ram": 2900.0, "disk": 100, "gpu": "B300-SXM-unlisted", "gpu_count": 8,
+           "stock_available": true}
+        ]
+      }
+    ]
+  },
+  "pricebook": [
+    {"id": 8, "name": "vCPU", "value": "0E-9"},
+    {"id": 10, "name": "A100-80G-PCIe", "value": "1.350000000"},
+    {"id": 11, "name": "L40-spot", "value": "0.800000000"}
+  ],
+  "stocks": {
+    "stocks": [
+      {"region": "CANADA-1", "stock-type": "GPU", "models": [
+        {"model": "L40", "available": "25+",
+         "configurations": {"1x": 56, "2x": 20}}
+      ]},
+      {"region": "NORWAY-1", "stock-type": "GPU", "models": [
+        {"model": "A100-80G-PCIe", "available": "10",
+         "configurations": {"4x": 10}}
+      ]}
+    ]
+  }
+}

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The idle-capacity index — compute.wick.pics</title>
+<meta name="description" content="What share of the listed GPU rental market is idle hardware looking for work, measured live from interruptible listings and recorded every half hour.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/idle/">
+<meta property="og:title" content="The idle-capacity index — compute.wick.pics">
+<meta property="og:description" content="What share of the listed GPU rental market is idle hardware looking for work, measured live from interruptible listings and recorded every half hour.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/idle/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(30px,6vh,70px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;letter-spacing:-0.015em;max-width:20ch}
+.intro{margin-top:18px;color:var(--ink2);max-width:60ch}
+.hero-num{margin:44px 0 8px;font-family:var(--mono)}
+.hero-num strong{display:block;font-size:clamp(3.6rem,10vw,6.4rem);font-weight:700;color:var(--phos);line-height:1;letter-spacing:-.02em}
+.hero-num span{display:block;margin-top:12px;font-size:.78rem;color:var(--ink2);max-width:52ch}
+.stats{display:flex;flex-wrap:wrap;gap:0 44px;margin:34px 0 10px;font-family:var(--mono)}
+.stats div{padding:14px 0;min-width:130px}
+.stats b{display:block;font-size:1.25rem;font-weight:600;color:var(--ink)}
+.stats i{font-style:normal;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.markbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:34px 0 8px}
+.chip{font-family:var(--mono);font-size:.75rem;color:var(--ink2);background:none;border:1px solid var(--hair);
+  border-radius:999px;padding:8px 16px;cursor:pointer;transition:color .18s,border-color .18s}
+.chip:hover{color:var(--ink);border-color:var(--ink2)}
+.chip[aria-pressed="true"]{color:#141007;background:var(--amber);border-color:var(--amber);font-weight:600}
+.fresh{font-family:var(--mono);font-size:.72rem;color:var(--ink2);margin-left:auto}
+.tapewrap{position:relative;border-top:1px solid var(--hair);padding-top:8px}
+.tapewrap.loading svg{opacity:.45;transition:opacity .2s}
+#idlechart{display:block;width:100%;height:auto;touch-action:pan-y}
+#idlechart text{font-family:var(--mono);font-size:11px;fill:var(--ink2)}
+#idlechart .gline{stroke:var(--hair)}
+#idlechart .series{fill:none;stroke:var(--phos);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+#idlechart .xhair{stroke:var(--ink2);stroke-opacity:.55;stroke-dasharray:2 3}
+.tapetip{position:absolute;pointer-events:none;background:var(--raised);border:1px solid var(--hair);
+  padding:10px 12px;font-family:var(--mono);font-size:.72rem;min-width:180px;z-index:5;display:none}
+.tapetip .tt-ts{color:var(--ink2);margin-bottom:6px}
+.tapetip .tt-val{color:var(--phos);font-weight:600;font-size:.95rem}
+.tapetip .tt-sub{color:var(--ink2);margin-top:3px}
+.mnote{margin-top:16px;font-family:var(--mono);font-size:.72rem;color:var(--ink2);max-width:74ch}
+.mnote a{color:var(--ink)}
+.field{margin-top:54px;padding-top:34px;border-top:1px solid var(--hair);max-width:62ch}
+.field h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;letter-spacing:-0.01em}
+.field p{margin-top:10px;color:var(--ink2)}
+.field p b{color:var(--ink);font-weight:600}
+details{margin-top:16px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+summary{cursor:pointer}
+details table{margin-top:10px;width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.72rem}
+details th{font-weight:400;color:var(--ink2);text-align:left;padding:10px 14px 10px 0;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+details td{padding:10px 14px 10px 0;border-top:1px solid var(--hair)}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>The idle-capacity index.</h1>
+  <p class="intro">One number for the whole pond: the share of listed GPU rental capacity that is idle hardware looking for work &mdash; every interruptible listing across every feed we read, over everything listed. Recorded every half hour since 23 Aug 2026.</p>
+
+  <div class="hero-num"><strong id="hero">&hellip;</strong><span id="hero-sub">reading the market&hellip;</span></div>
+
+  <div class="stats" id="stats" hidden>
+    <div><b id="s-idle">&mdash;</b><i>idle offers</i></div>
+    <div><b id="s-total">&mdash;</b><i>listed offers</i></div>
+    <div><b id="s-feeds">&mdash;</b><i>live feeds</i></div>
+    <div><b id="s-cheap">&mdash;</b><i>cheapest idle $/gpu/hr</i></div>
+  </div>
+
+  <div class="markbar" role="group" aria-label="Range">
+    <button class="chip" data-hrs="24" aria-pressed="true">24h</button>
+    <button class="chip" data-hrs="168" aria-pressed="false">7d</button>
+    <button class="chip" data-hrs="720" aria-pressed="false">30d</button>
+    <span class="fresh" id="cover"></span>
+  </div>
+  <div class="tapewrap" id="wrap0">
+    <svg id="idlechart" viewBox="0 0 960 300" role="img" aria-label="Idle share of listed GPU capacity over time" tabindex="0"></svg>
+    <div class="tapetip" id="tip"></div>
+  </div>
+  <p class="mnote">The line is the index itself: idle listings over all listings, market-wide, at each recording. Hover or arrow-key across it. Raw series: <a href="/api/idle-history">/api/idle-history</a> &mdash; agents get the same number from the <a href="/#agents">MCP</a> tool <code>idle_history</code>.</p>
+  <details><summary>table view</summary><table id="tbl"></table></details>
+
+  <div class="field">
+    <h2>Why this number.</h2>
+    <p>Ecologists judge a wetland by listening for frogs; we judge the GPU market by listening for idle silicon. An interruptible listing is a machine that is racked, powered, priced, <b>and doing nothing</b>. When the index runs high, the cheapest compute on earth is sitting in plain sight and the pond is loud. When it falls, the market is tight and spot prices will follow.</p>
+    <p>Every point is computed from listings we recorded ourselves, nothing modeled and nothing interpolated. Where the tape is shorter than the window, the chart shows exactly as much as exists.</p>
+  </div>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/api/idle-history">the raw series</a></div></footer>
+<script>
+const $ = s => document.querySelector(s);
+const state = { hrs: 24 };
+let D = null, G = null, TS = [], idx = -1;
+const NS = "http://www.w3.org/2000/svg";
+function el(t, a, x){ const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); if (x != null) n.textContent = x; return n; }
+const pct = v => (v * 100).toFixed(1) + "%";
+
+async function loadStats(){
+  try{
+    const s = await (await fetch("/api/stats")).json();
+    $("#hero").textContent = s.idle_share != null ? pct(s.idle_share) : "—";
+    $("#hero-sub").textContent = "of the " + s.total_offers + " offers listed across " +
+      Object.keys(s.providers).length + " feeds are idle and rentable right now";
+    $("#s-idle").textContent = s.idle_offers;
+    $("#s-total").textContent = s.total_offers;
+    $("#s-feeds").textContent = Object.keys(s.providers).length;
+    $("#stats").hidden = false;
+    const o = await (await fetch("/api/offers?offer_class=interruptible&limit=1")).json();
+    if (o.offers.length) $("#s-cheap").textContent = "$" + o.offers[0].price_final_per_gpu_hr.toFixed(3);
+  }catch(e){ $("#hero-sub").textContent = "the market feed is unreachable right now"; }
+}
+
+async function loadChart(){
+  $("#wrap0").classList.add("loading");
+  try{
+    D = await (await fetch("/api/idle-history?hours=" + state.hrs)).json();
+    render();
+  }catch(e){ empty("The recorder is unreachable right now."); }
+  $("#wrap0").classList.remove("loading");
+}
+
+function empty(msg){
+  const svg = $("#idlechart");
+  svg.textContent = "";
+  svg.appendChild(el("text", { x: 480, y: 150, "text-anchor": "middle" }, msg));
+  $("#cover").textContent = ""; $("#tbl").textContent = ""; hideTip();
+}
+
+function render(){
+  const svg = $("#idlechart"), wrap = $("#wrap0");
+  const W = Math.max(340, Math.min(wrap.clientWidth || 960, 1100)), H = 300;
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.textContent = ""; hideTip();
+  const pts = D.points;
+  if (!pts.length){ empty("No tape yet — the recorder writes a point every pass."); return; }
+  TS = pts.map(p => p[0]);
+  const M = { l: 52, r: 24, t: 14, b: 30 };
+  const x0 = TS[0], x1 = Math.max(TS[TS.length - 1], x0 + 1), span = x1 - x0;
+  const X = t => M.l + (t - x0) / (x1 - x0) * (W - M.l - M.r);
+  const Y = v => H - M.b - v * (H - M.t - M.b);
+  G = { X, Y, x0, x1, W, H, M };
+  for (let i = 0; i <= 4; i++){
+    const v = i / 4, y = Y(v);
+    svg.appendChild(el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, class: "gline" }));
+    svg.appendChild(el("text", { x: M.l - 8, y: y + 4, "text-anchor": "end" }, (v * 100) + "%"));
+  }
+  const fmt = ts => {
+    const d = new Date(ts * 1000);
+    return span <= 48 * 3600
+      ? String(d.getUTCHours()).padStart(2, "0") + ":" + String(d.getUTCMinutes()).padStart(2, "0")
+      : d.getUTCDate() + " " + d.toLocaleString("en", { month: "short", timeZone: "UTC" });
+  };
+  for (let i = 0; i <= 4; i++){
+    const t = x0 + span * i / 4;
+    svg.appendChild(el("text", { x: X(t), y: H - 8, "text-anchor": i === 0 ? "start" : i === 4 ? "end" : "middle" },
+      fmt(t) + (i === 4 ? " UTC" : "")));
+  }
+  if (pts.length === 1){
+    svg.appendChild(el("circle", { cx: X(pts[0][0]), cy: Y(pts[0][1]), r: 4, fill: "#7FD99A" }));
+  } else {
+    const d = pts.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+    svg.appendChild(el("path", { d, class: "series" }));
+  }
+  const cov = (TS[TS.length - 1] - TS[0]) / 3600;
+  $("#cover").textContent = "tape covers " + (cov < 48 ? cov.toFixed(1) + "h" : (cov / 24).toFixed(1) + "d") +
+    " of the " + (state.hrs <= 48 ? state.hrs + "h" : state.hrs / 24 + "d") + " window";
+  const tbl = $("#tbl");
+  tbl.textContent = "";
+  const thr = document.createElement("tr");
+  ["time (UTC)", "idle share", "idle offers", "listed offers"].forEach(t => {
+    const th = document.createElement("th"); th.textContent = t; thr.appendChild(th);
+  });
+  tbl.appendChild(thr);
+  pts.slice(-16).reverse().forEach(p => {
+    const tr = document.createElement("tr");
+    [new Date(p[0] * 1000).toISOString().slice(5, 16).replace("T", " "), pct(p[1]), p[2], p[3]].forEach(v => {
+      const td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
+    });
+    tbl.appendChild(tr);
+  });
+}
+
+function hideTip(){
+  $("#tip").style.display = "none";
+  const o = $("#idlechart").querySelector(".xhair");
+  if (o) o.remove();
+  idx = -1;
+}
+function showTip(i){
+  if (!G || !TS.length) return;
+  idx = Math.max(0, Math.min(i, TS.length - 1));
+  const p = D.points[idx], svg = $("#idlechart"), tip = $("#tip"), wrap = $("#wrap0");
+  const o = svg.querySelector(".xhair");
+  if (o) o.remove();
+  svg.appendChild(el("line", { x1: G.X(p[0]), x2: G.X(p[0]), y1: G.M.t, y2: G.H - G.M.b, class: "xhair" }));
+  tip.textContent = "";
+  const h = document.createElement("div"); h.className = "tt-ts";
+  h.textContent = new Date(p[0] * 1000).toISOString().slice(0, 16).replace("T", " ") + " UTC";
+  const v = document.createElement("div"); v.className = "tt-val"; v.textContent = pct(p[1]);
+  const s = document.createElement("div"); s.className = "tt-sub"; s.textContent = p[2] + " idle of " + p[3] + " listed";
+  tip.append(h, v, s);
+  tip.style.display = "block";
+  const frac = G.X(p[0]) / G.W, ww = wrap.clientWidth;
+  tip.style.left = frac > 0.62 ? (frac * ww - tip.offsetWidth - 14) + "px" : (frac * ww + 14) + "px";
+  tip.style.top = "24px";
+}
+$("#idlechart").addEventListener("pointermove", e => {
+  if (!G || !TS.length) return;
+  const box = e.currentTarget.getBoundingClientRect();
+  const t = G.x0 + ((e.clientX - box.left) / box.width * G.W - G.M.l) / (G.W - G.M.l - G.M.r) * (G.x1 - G.x0);
+  let best = 0;
+  for (let i = 1; i < TS.length; i++) if (Math.abs(TS[i] - t) < Math.abs(TS[best] - t)) best = i;
+  showTip(best);
+});
+$("#idlechart").addEventListener("pointerleave", hideTip);
+$("#idlechart").addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight"){
+    e.preventDefault();
+    showTip((idx < 0 ? TS.length - 1 : idx) + (e.key === "ArrowRight" ? 1 : -1));
+  } else if (e.key === "Escape") hideTip();
+});
+$("#idlechart").addEventListener("blur", hideTip);
+document.querySelectorAll("[data-hrs]").forEach(c => c.addEventListener("click", () => {
+  document.querySelectorAll("[data-hrs]").forEach(x => x.setAttribute("aria-pressed", "false"));
+  c.setAttribute("aria-pressed", "true");
+  state.hrs = +c.dataset.hrs;
+  loadChart();
+}));
+let rs;
+addEventListener("resize", () => { clearTimeout(rs); rs = setTimeout(() => { if (D) render(); }, 180); });
+loadStats(); loadChart();
+</script>
+</body>
+</html>

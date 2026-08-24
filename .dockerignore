@@ -1,0 +1,16 @@
+# Never bake secrets or local state into an image layer
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+data/
+logs/
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+web/.well-known/
+*.md
+tests/

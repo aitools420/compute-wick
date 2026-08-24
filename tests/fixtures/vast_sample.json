@@ -1,0 +1,15 @@
+{"offers": [
+  {"id": 1234567, "gpu_name": "RTX 4090", "num_gpus": 1, "gpu_ram": 24564,
+   "dph_total": 0.412, "geolocation": "Sweden, SE", "reliability2": 0.9987,
+   "verification": "verified", "rentable": true, "is_bid": false},
+  {"id": 1234568, "gpu_name": "RTX_4090", "num_gpus": 4, "gpu_ram": 24564,
+   "dph_total": 1.52, "geolocation": "US", "reliability2": 0.9421,
+   "verification": "verified", "rentable": true, "is_bid": true},
+  {"id": 1234569, "gpu_name": "H100 SXM", "num_gpus": 8, "gpu_ram": 81559,
+   "dph_total": 15.84, "geolocation": "Norway, NO", "reliability": 0.99,
+   "verification": "verified", "rentable": true, "is_bid": false},
+  {"id": 999, "gpu_name": "", "num_gpus": 1, "gpu_ram": 8192,
+   "dph_total": 0.05, "geolocation": null, "rentable": true, "is_bid": false},
+  {"id": 998, "gpu_name": "RTX 3090", "num_gpus": 1, "gpu_ram": 24576,
+   "dph_total": 0, "geolocation": "DE", "rentable": true, "is_bid": false}
+]}

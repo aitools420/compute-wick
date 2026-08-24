@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+data/
+logs/
+.registry-key.pem
+web/gpu/
+web/vs/
+web/sitemap.xml

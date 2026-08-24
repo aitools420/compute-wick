@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare GPUs — compute.wick.pics</title>
+<meta name="description" content="Side-by-side GPU rental comparison: live floor prices, idle discounts, VRAM, spec throughput, bandwidth and value per dollar — two or three cards at once, straight off the live book.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/compare/">
+<meta property="og:title" content="Compare GPUs — compute.wick.pics">
+<meta property="og:description" content="Pick two or three GPUs, see live prices, specs and value per dollar side by side.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/compare/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:60ch}
+.pickers{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.pickers input{font-family:var(--mono);font-size:.8rem;color:var(--ink);background:var(--stock);
+  border:1px solid var(--hair);border-radius:999px;padding:10px 18px;flex:1;min-width:160px}
+.pickers input:focus{outline:2px solid var(--amber);outline-offset:2px}
+.pickers input::placeholder{color:var(--ink2)}
+.tablewrap{margin-top:34px;border-top:1px solid var(--hair)}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.8rem;table-layout:fixed}
+th{font-weight:600;color:var(--ink);text-align:left;padding:16px 12px 16px 0;font-size:.82rem;overflow:hidden;text-overflow:ellipsis}
+th:first-child{font-weight:400;color:var(--ink2);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+td{padding:12px 12px 12px 0;border-top:1px solid var(--hair);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.lbl{color:var(--ink2);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;white-space:normal}
+td.win{color:var(--amber);font-weight:600}
+td .idle-tick{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--phos);margin-right:8px}
+.thin{color:var(--ink2)}
+.note{margin-top:22px;font-family:var(--mono);font-size:.72rem;color:var(--ink2);max-width:70ch}
+.note a{color:var(--ink)}
+@media (max-width:640px){
+  .col3, #in-c{display:none}
+  td, th{padding-right:8px}
+}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>Compare, side by side.</h1>
+  <p class="intro">Start typing a model &mdash; live floor prices, idle discounts, spec throughput and value per dollar line up in columns. The <span style="color:var(--amber)">amber</span> cell wins its row. Everything from the live book and the published spec tables; unrated cells say so.</p>
+
+  <div class="pickers">
+    <input id="in-a" list="models" placeholder="first GPU — try 4090" autocomplete="off">
+    <input id="in-b" list="models" placeholder="second — try H100" autocomplete="off">
+    <input id="in-c" list="models" placeholder="third (optional)" autocomplete="off">
+    <datalist id="models"></datalist>
+  </div>
+
+  <div class="tablewrap"><table id="cmp" hidden>
+    <thead><tr id="head"></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <p class="note">Prices are each model&rsquo;s cheapest live listing this minute; idle (<span class="idle-tick" style="margin:0 4px;display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--phos)"></span>) prices hold only until reclaimed. Spec figures are vendor ceilings, not benchmarks &mdash; the same tables behind <a href="/api/specs">/api/specs</a>, with unrated models named, never guessed. Share this comparison: the URL updates as you pick.</p>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/calc/">cost calculator</a> &middot; <a href="/faq/">fair questions</a></div></footer>
+<script>
+const $ = s => document.querySelector(s);
+let GPUS = {}, SPREAD = {}, SPECS = {}, BWS = {};
+const norm = s => (s || "").trim().toUpperCase();
+
+Promise.all([
+  fetch("/api/gpus").then(r => r.json()),
+  fetch("/api/spread").then(r => r.json()),
+  fetch("/api/specs").then(r => r.json()),
+]).then(([g, sp, s]) => {
+  (g.gpus || []).forEach(x => { GPUS[norm(x.gpu_model)] = x; });
+  (sp.models || []).forEach(x => { SPREAD[norm(x.gpu_model)] = x; });
+  Object.entries(s.fp16_dense_tflops || {}).forEach(([k, v]) => { SPECS[k.replace(/ /g, "")] = v; });
+  Object.entries(s.mem_bw_gbs || {}).forEach(([k, v]) => { BWS[k.replace(/ /g, "")] = v; });
+  const dl = $("#models");
+  Object.values(GPUS).sort((a, b) => b.offers - a.offers).forEach(x => {
+    const o = document.createElement("option"); o.value = x.gpu_model; dl.appendChild(o);
+  });
+  const q = new URLSearchParams(location.search);
+  $("#in-a").value = q.get("a") || "RTX 4090";
+  $("#in-b").value = q.get("b") || "H100 SXM";
+  $("#in-c").value = q.get("c") || "";
+  render();
+}).catch(() => {});
+
+const fp = p => p >= 1 ? "$" + p.toFixed(2) : "$" + p.toFixed(3);
+const fmt = v => v == null ? null : v >= 100 ? Math.round(v).toLocaleString("en-US") : (Math.round(v * 10) / 10).toString();
+
+function render(){
+  const picks = ["a", "b", "c"].map(k => norm($("#in-" + k).value)).filter(k => k && GPUS[k]);
+  const q = new URLSearchParams();
+  ["a", "b", "c"].forEach(k => { const v = $("#in-" + k).value.trim(); if (v && GPUS[norm(v)]) q.set(k, GPUS[norm(v)].gpu_model); });
+  history.replaceState(null, "", q.toString() ? "?" + q : location.pathname);
+  if (picks.length < 2){ $("#cmp").hidden = true; return; }
+  $("#cmp").hidden = false;
+  const gs = picks.map(k => GPUS[k]);
+  const head = $("#head");
+  head.textContent = "";
+  const th0 = document.createElement("th"); th0.textContent = "vs"; head.appendChild(th0);
+  gs.forEach((g, i) => {
+    const th = document.createElement("th");
+    if (i === 2) th.className = "col3";
+    const a = document.createElement("a");
+    a.href = "/gpu/" + g.gpu_model.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "/";
+    a.textContent = g.gpu_model;
+    th.appendChild(a);
+    head.appendChild(th);
+  });
+  const S = m => SPECS[m.replace(/ /g, "")], B = m => BWS[m.replace(/ /g, "")];
+  const rows = [
+    ["cheapest idle /GPU/hr", g => { const s = SPREAD[norm(g.gpu_model)]; return s && s.interruptible_min; }, "low", fp],
+    ["cheapest on-demand /GPU/hr", g => { const s = SPREAD[norm(g.gpu_model)]; return s && s.on_demand_min; }, "low", fp],
+    ["idle discount", g => { const s = SPREAD[norm(g.gpu_model)]; return s && s.discount_pct; }, "high", v => "−" + Math.round(v) + "%"],
+    ["live offers", g => g.offers, "high", v => String(v)],
+    ["vram, max listed", g => g.vram_gb, "high", v => Math.round(v) + " GB"],
+    ["fp16 spec TFLOPS", g => S(g.gpu_model), "high", v => String(v)],
+    ["mem bandwidth GB/s", g => B(g.gpu_model), "high", v => v.toLocaleString("en-US")],
+    ["TFLOPS·h per $ (at floor)", g => { const t = S(g.gpu_model); return t && g.min_price ? t / g.min_price : null; }, "high", fmt],
+    ["VRAM GB·h per $ (at floor)", g => g.vram_gb && g.min_price ? g.vram_gb / g.min_price : null, "high", fmt],
+  ];
+  const body = $("#rows");
+  body.textContent = "";
+  rows.forEach(([label, get, dir, show]) => {
+    const vals = gs.map(get).map(v => (v == null || v === false || Number.isNaN(v)) ? null : v);
+    if (vals.every(v => v == null)) return;
+    const nums = vals.filter(v => v != null);
+    const best = dir === "low" ? Math.min(...nums) : Math.max(...nums);
+    const tr = document.createElement("tr");
+    const l = document.createElement("td"); l.className = "lbl"; l.textContent = label; tr.appendChild(l);
+    vals.forEach((v, i) => {
+      const td = document.createElement("td");
+      if (i === 2) td.className = "col3";
+      if (v == null){ td.textContent = "—"; td.classList.add("thin"); td.title = "unrated or not listed — never guessed"; }
+      else {
+        td.textContent = show(v);
+        if (nums.length > 1 && v === best) td.classList.add("win");
+      }
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+["a", "b", "c"].forEach(k => $("#in-" + k).addEventListener("input", render));
+</script>
+</body>
+</html>

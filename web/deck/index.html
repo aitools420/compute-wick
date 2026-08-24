@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>compute.wick.pics: the deck</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080D0B;color:var(--ink);font-family:var(--serif);min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow-x:clip}
+.slide{position:relative;width:min(1080px,94vw);aspect-ratio:16/9;background:linear-gradient(180deg,#0C110E,#080D0B 75%);
+  border:1px solid var(--hair);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(22px,5vw,64px)}
+.slide .frog{position:absolute;right:-2%;bottom:-4%;height:64%;opacity:.97;pointer-events:none;
+  -webkit-mask-image:radial-gradient(100% 100% at 58% 55%,#000 42%,transparent 80%);
+  mask-image:radial-gradient(100% 100% at 58% 55%,#000 42%,transparent 80%)}
+.mark{position:absolute;top:clamp(18px,3.5vw,44px);left:clamp(22px,5vw,64px);font-family:var(--mono);font-weight:600;font-size:clamp(.8rem,1.6vw,1.15rem)}
+.mark span{color:var(--ink2);font-weight:300}
+h1{font-weight:600;font-size:clamp(1.5rem,4.4vw,3.2rem);line-height:1.06;letter-spacing:-0.015em;max-width:21ch;position:relative}
+h1 em{font-style:normal;color:var(--amber)}
+.pos{margin-top:clamp(10px,1.8vw,20px);font-family:var(--mono);font-size:clamp(.62rem,1.35vw,.95rem);color:var(--ink2);line-height:1.7;max-width:52ch;position:relative}
+.diffs{margin-top:clamp(14px,2.6vw,30px);display:flex;gap:clamp(8px,1.6vw,18px);flex-wrap:wrap;position:relative}
+.diffs div{font-family:var(--mono);font-size:clamp(.56rem,1.15vw,.8rem);border:1px solid var(--hair);border-radius:999px;padding:.55em 1.2em;color:var(--ink)}
+.diffs b{color:var(--amber);font-weight:500}
+.note{margin-top:26px;font-family:var(--mono);font-size:.7rem;color:var(--ink2)}
+.note a{color:var(--ink2)}
+svg.dots{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,13,11,.92) 0%,rgba(8,13,11,.55) 42%,transparent 68%);pointer-events:none}
+</style>
+</head>
+<body>
+<figure class="slide" role="img" aria-label="Slide one: compute.wick.pics, the intelligence layer for GPU compute">
+  <svg class="dots" viewBox="0 0 1080 607" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+  <img class="frog" src="/img/frog-cut.webp" alt="">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="mark">compute<span>.wick.pics</span></div>
+  <h1>The intelligence layer for <em>GPU compute</em>.</h1>
+  <p class="pos">Humans and AI agents find, compare, and route to the cheapest suitable GPU on any marketplace, with demand steered toward the world's idle hardware.</p>
+  <div class="diffs">
+    <div>agent-first: native MCP</div>
+    <div><b>zero</b> platform fees</div>
+    <div>idle-first: lower footprint</div>
+  </div>
+</figure>
+<p class="note">slide 1. the rest of the deck is being written elsewhere. <a href="/">back to the market</a></p>
+<script>
+const svg = document.querySelector("svg.dots");
+let seed = 7;
+function rnd(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+for (let i = 0; i < 90; i++){
+  const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  c.setAttribute("cx", (rnd() * 1080).toFixed(1));
+  c.setAttribute("cy", (rnd() * 380).toFixed(1));
+  c.setAttribute("r", (0.8 + rnd() * 2.2).toFixed(2));
+  c.setAttribute("fill", rnd() < 0.5 ? "#7FD99A" : "#F0A868");
+  c.setAttribute("opacity", (0.2 + rnd() * 0.6).toFixed(2));
+  svg.appendChild(c);
+}
+</script>
+</body>
+</html>

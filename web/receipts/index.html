@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The receipts — compute.wick.pics</title>
+<meta name="description" content="The station's own execution tape: every rental the broker places with house money, published as it happens. This page existed before the money did — on purpose.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/receipts/">
+<meta property="og:title" content="The receipts — compute.wick.pics">
+<meta property="og:description" content="A broker that publishes its own fills. Every house rental, as it happens.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/receipts/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:60ch}
+.empty{margin-top:44px;padding:30px;background:var(--raised);border:1px solid var(--hair);font-family:var(--mono);font-size:.8rem;color:var(--ink2);max-width:60ch;line-height:1.8}
+.empty b{color:var(--ink)}
+.tablewrap{margin-top:34px;border-top:1px solid var(--hair);overflow-x:auto;display:none}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.76rem}
+th{font-weight:400;color:var(--ink2);text-align:left;padding:14px 10px 14px 0;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase}
+td{padding:12px 10px 12px 0;border-top:1px solid var(--hair);white-space:nowrap}
+.thin{color:var(--ink2)}
+.note{margin-top:22px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+.note a{color:var(--ink)}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>The receipts.</h1>
+  <p class="intro">The station&rsquo;s own execution tape: every rental the broker places with house money &mdash; placements, hours, spend, and the platform fee it charged itself &mdash; published here as it happens, from the same metering ledger any account can use.</p>
+
+  <div class="empty" id="empty">
+    <b>No paid rentals yet.</b><br>
+    The rail is live and proven in dry-run; the first funded test publishes here the day it runs. This page existed <b>before</b> the money did &mdash; on purpose: a broker that publishes its own fills has nowhere to hide, and we want it that way from receipt number one.
+  </div>
+
+  <div class="tablewrap" id="tw"><table>
+    <thead><tr><th>When (UTC)</th><th>Event</th><th>GPU</th><th>Source</th><th>$ / hr</th><th>Hours</th><th>Spend</th><th>Fee</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <p class="note">Raw ledger: <a href="/api/receipts">/api/receipts</a>. What this is not: user data &mdash; only the house account is ever published; every other ledger needs its own bearer token.</p>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/status/">feed status</a> &middot; <a href="/faq/">fair questions</a></div></footer>
+<script>
+const $ = s => document.querySelector(s);
+fetch("/api/receipts").then(r => r.json()).then(d => {
+  const rs = d.receipts || [];
+  if (!rs.length) return;
+  $("#empty").style.display = "none";
+  $("#tw").style.display = "block";
+  const rows = $("#rows");
+  rs.forEach(e => {
+    const tr = document.createElement("tr");
+    const td = (t, cls) => { const c = document.createElement("td"); if (cls) c.className = cls; c.textContent = t; tr.appendChild(c); };
+    td(new Date(e.ts * 1000).toISOString().replace("T", " ").slice(0, 16));
+    td(e.kind || "");
+    td((e.gpu_model || "") + (e.gpu_count > 1 ? " ×" + e.gpu_count : ""));
+    td(e.provider || "", "thin");
+    td(e.price_hr != null ? "$" + Number(e.price_hr).toFixed(3) : "—");
+    td(e.hours != null ? Number(e.hours).toFixed(2) : "—", "thin");
+    td(e.amount_usd != null ? "$" + Number(e.amount_usd).toFixed(2) : "—");
+    td(e.fee_usd != null ? "$" + Number(e.fee_usd).toFixed(4) + " (" + (e.fee_bps || 0) + " bps)" : "—", "thin");
+    rows.appendChild(tr);
+  });
+}).catch(() => {});
+</script>
+</body>
+</html>

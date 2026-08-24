@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800}
+*{margin:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:linear-gradient(180deg,#0C110E,#080D0B 70%,#060A08);
+  font-family:'Erode',Georgia,serif;color:#E8EDE9;position:relative;overflow:hidden}
+.frog{position:absolute;right:-40px;bottom:0;height:590px;opacity:.92;
+  -webkit-mask-image:radial-gradient(120% 110% at 60% 45%,#000 55%,transparent 92%);
+  mask-image:radial-gradient(120% 110% at 60% 45%,#000 55%,transparent 92%)}
+.inner{position:absolute;left:70px;bottom:70px;z-index:2}
+h1{font-weight:600;font-size:74px;line-height:1.06;letter-spacing:-0.015em;max-width:13ch}
+h1 em{font-style:normal;color:#F0A868}
+.mark{position:absolute;left:70px;top:58px;font-family:'Martian Mono',monospace;font-weight:600;font-size:26px}
+.mark span{color:#A8B3AA;font-weight:300}
+.sub{margin-top:26px;font-family:'Martian Mono',monospace;font-size:19px;color:#A8B3AA;line-height:1.8}
+.sub b{color:#E8EDE9;font-weight:500}
+svg{position:absolute;inset:0}
+</style></head><body>
+<svg width="1200" height="630" id="dots"></svg>
+<img class="frog" src="/img/frog-observer.webp">
+<div class="mark">compute<span>.wick.pics</span></div>
+<div class="inner">
+  <h1>The spot market for <em>idle</em> GPUs.</h1>
+  <div class="sub">live prices, ranked. <b>zero platform fees.</b> agents welcome.</div>
+</div>
+<script>
+const svg = document.getElementById("dots");
+let seed = 42;
+function rnd(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+for (let i = 0; i < 130; i++){
+  const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  const idle = rnd() < 0.5;
+  c.setAttribute("cx", rnd() * 1200);
+  c.setAttribute("cy", rnd() * 420);
+  c.setAttribute("r", 1 + rnd() * 2.6);
+  c.setAttribute("fill", idle ? "#7FD99A" : "#F0A868");
+  c.setAttribute("opacity", 0.25 + rnd() * 0.65);
+  svg.appendChild(c);
+}
+</script></body></html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair questions — compute.wick.pics</title>
+<meta name="description" content="The questions a sharp skeptic asks about this GPU market instrument, answered straight — including the ones where the honest answer is: that's deliberate.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/faq/">
+<meta property="og:title" content="Fair questions — compute.wick.pics">
+<meta property="og:description" content="The questions a sharp skeptic asks, answered straight — including the ones where the honest answer is: that's deliberate.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/faq/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:58ch}
+.q{margin-top:44px;padding-top:30px;border-top:1px solid var(--hair)}
+.q h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;letter-spacing:-0.01em}
+.q p{margin-top:10px;color:var(--ink2);max-width:64ch}
+.q p b{color:var(--ink);font-weight:600}
+.q p a{color:var(--ink)}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>Fair questions.</h1>
+  <p class="intro">The questions a sharp skeptic asks about this station, answered straight &mdash; including the ones where the honest answer is: <em>that&rsquo;s deliberate.</em></p>
+
+  <div class="q">
+    <h2>Isn&rsquo;t this just a front-end to Vast.ai?</h2>
+    <p>Ten feeds, not one &mdash; and yes, Vast dominates the cheap interruptible end, because that is genuinely where the market&rsquo;s floor lives; reporting that honestly is the job, not a flaw in it. The one-row-per-model floor view draws from seven different feeds right now. And the things you come here for &mdash; the workload lens that re-prices the book for your task, the price tape recorded since first boot, resting limit orders, accountless tripwires &mdash; exist on none of the source marketplaces.</p>
+  </div>
+
+  <div class="q">
+    <h2>Zero fees &mdash; so what&rsquo;s the business?</h2>
+    <p>The fee lever exists and is public: every API response states <b>fee_bps: 0</b>, and metered usage is priced at the moment it happens, so a future fee can never reach backwards into old usage. Outbound links may carry referral tags; the renter&rsquo;s price is unchanged and the docs say so. We charge nothing today because an instrument earns trust before it earns basis points &mdash; when a fee arrives it will sit on execution services, never on reading the market.</p>
+  </div>
+
+  <div class="q">
+    <h2>Isn&rsquo;t idle capacity just unreliable garbage?</h2>
+    <p>It&rsquo;s reclaimable, and priced like it &mdash; that&rsquo;s not a defect, it&rsquo;s an asset class. Checkpointed training, batch inference, render queues, CI: restartable work soaks interruptible capacity at roughly half the on-demand price. We quantify exactly that trade &mdash; the idle-discount instrument on the front page is nothing else &mdash; and on-demand is one toggle away. What we won&rsquo;t do is pretend the reclaim risk isn&rsquo;t there: the table&rsquo;s idle dot says it plainly.</p>
+  </div>
+
+  <div class="q">
+    <h2>You don&rsquo;t operate hardware. How is this a market?</h2>
+    <p>We run no metal and sell no SLA &mdash; deliberately, and the site says so wherever it matters. What rests <em>here</em> and nowhere else: standing limit orders with signed fill tickets, executed by your own keyholder. The ladder is public &mdash; aggregate, index, broker, clearing &mdash; and each rung ships when it&rsquo;s real. Google Flights isn&rsquo;t an airline; it&rsquo;s still where flights get found.</p>
+  </div>
+
+  <div class="q">
+    <h2>Why do some prices look impossibly cheap?</h2>
+    <p>Because interruptible marketplaces are auctions: the listed price of an idle machine is a real, current ask that holds only while you&rsquo;re the top bid. That&rsquo;s stated in the table&rsquo;s fine print, and it&rsquo;s why a consumer card can print at a cent an hour. It&rsquo;s not demo data &mdash; it&rsquo;s what the bottom of a bid market actually looks like, labeled instead of hidden.</p>
+  </div>
+
+  <div class="q">
+    <h2>Why aren&rsquo;t AWS, GCP and Azure in the book?</h2>
+    <p>Deliberate. Our buyer is price-driven; the hyperscalers are the price ceiling and the quota wall &mdash; useful context, not useful rows. If you need an enterprise SLA and a procurement contract, they are the right answer and we&rsquo;ll say so to your face. The book stays where the spot economics are.</p>
+  </div>
+
+  <div class="q">
+    <h2>Is the environmental angle greenwashing?</h2>
+    <p>We publish one measured number &mdash; the live idle share of the listed market &mdash; and one argument made in the open: the factory footprint of an existing card is already spent, so work routed onto idle silicon adds only its marginal wall-power, while the same demand met with new hardware pays the factory again. What we refuse to publish: carbon calculators, offsets, badges, or any wattage we didn&rsquo;t meter. <a href="/eco/">/eco</a> tells a Scope&nbsp;3 reader to their face that they get no certificate here.</p>
+  </div>
+
+  <div class="q">
+    <h2>Where does the data come from, and how fresh is it?</h2>
+    <p>Ten marketplace feeds, keyed where a key buys depth. The feeds people actually rent from refresh about every five minutes; the sleepy catalog feeds every thirty; the history tape records half-hourly bars &mdash; and the split is printed, not hidden. Every feed&rsquo;s health, age and staleness is public at <a href="/api/stats">/api/stats</a>: a dead provider shows as down, never silently reused.</p>
+  </div>
+
+  <div class="q">
+    <h2>Can an agent really rent through this without a human?</h2>
+    <p>Reading the market is fully keyless &mdash; no signup, no token, MCP or plain JSON. Execution is honest about its boundary: rentals run on <em>your</em> provider key passed through a single call and never stored, or on a resting limit order your own keyholder daemon fills &mdash; credentials never live here, and neither does custody. Wallet-native keyless rental is the published next rung of the ladder, and it will ship when it&rsquo;s real, not before.</p>
+  </div>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/agents/">agent guide</a> &middot; <a href="/eco/">environment</a></div></footer>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Isn't compute.wick.pics just a front-end to Vast.ai?","acceptedAnswer":{"@type":"Answer","text":"Ten feeds, not one. Vast dominates the cheap interruptible end because that is where the market's floor genuinely lives; reporting it honestly is the job. The per-model floor view draws from seven feeds, and the workload lens, price tape, resting limit orders and accountless tripwires exist on none of the source marketplaces."}},
+{"@type":"Question","name":"Zero fees — so what's the business?","acceptedAnswer":{"@type":"Answer","text":"The fee lever is public: every API response states fee_bps: 0, and metered usage is priced at event time so a future fee can never reach backwards. Outbound links may carry referral tags with the renter's price unchanged. A fee will sit on execution services, never on reading the market."}},
+{"@type":"Question","name":"Isn't idle capacity just unreliable garbage?","acceptedAnswer":{"@type":"Answer","text":"It's reclaimable and priced like it — an asset class, not a defect. Restartable work (checkpointed training, batch inference, render, CI) soaks it at roughly half the on-demand price. The idle-discount instrument quantifies the trade and the table's idle dot states the reclaim risk plainly."}},
+{"@type":"Question","name":"You don't operate hardware. How is this a market?","acceptedAnswer":{"@type":"Answer","text":"No metal, no SLA — deliberately. What rests here and nowhere else: standing limit orders with signed fill tickets, executed by the user's own keyholder. The ladder is public: aggregate, index, broker, clearing. Google Flights isn't an airline; it's still where flights get found."}},
+{"@type":"Question","name":"Why do some prices look impossibly cheap?","acceptedAnswer":{"@type":"Answer","text":"Interruptible marketplaces are auctions: a listed idle price is a real current ask that holds only while you're the top bid. That's stated in the table's fine print. It's what the bottom of a bid market looks like, labeled instead of hidden."}},
+{"@type":"Question","name":"Why aren't AWS, GCP and Azure in the book?","acceptedAnswer":{"@type":"Answer","text":"Deliberate. The buyer here is price-driven; hyperscalers are the price ceiling and the quota wall — context, not rows. If you need an enterprise SLA, they are the right answer."}},
+{"@type":"Question","name":"Is the environmental angle greenwashing?","acceptedAnswer":{"@type":"Answer","text":"One measured number (the live idle share) and one open argument (embodied footprint is sunk; idle utilization adds only marginal wall-power and displaces new build). No carbon calculators, no offsets, no badges, no unmetered wattage — /eco tells a Scope 3 reader plainly that no certificate is on offer."}},
+{"@type":"Question","name":"Where does the data come from, and how fresh is it?","acceptedAnswer":{"@type":"Answer","text":"Ten marketplace feeds, keyed where a key buys depth. Money feeds refresh about every five minutes, catalog feeds every thirty, the history tape records half-hourly bars — the split is printed. Every feed's health and staleness is public at /api/stats."}},
+{"@type":"Question","name":"Can an agent really rent through this without a human?","acceptedAnswer":{"@type":"Answer","text":"Reading is fully keyless (MCP or JSON). Execution runs on the user's own provider key passed through one call and never stored, or on a resting limit order filled by the user's own keyholder daemon — no credentials, no custody held here. Wallet-native keyless rental is the published next rung."}}
+]}
+</script>
+</body>
+</html>

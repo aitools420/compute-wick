@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feed status — compute.wick.pics</title>
+<meta name="description" content="Live health of every provider feed behind the GPU market: offers, freshness, staleness — the same numbers the API publishes, drawn as a page.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/status/">
+<meta property="og:title" content="Feed status — compute.wick.pics">
+<meta property="og:description" content="Live health of every provider feed behind the GPU market. A dead feed shows as down — never silently reused.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/status/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:58ch}
+.stats{display:flex;flex-wrap:wrap;gap:28px 44px;margin-top:40px;padding:24px 28px;background:var(--raised);border:1px solid var(--hair)}
+.stats b{display:block;font-family:var(--mono);font-weight:700;font-size:1.6rem}
+.stats i{font-family:var(--mono);font-style:normal;font-size:.68rem;color:var(--ink2);letter-spacing:.08em;text-transform:uppercase}
+.tablewrap{margin-top:34px;border-top:1px solid var(--hair);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.8rem}
+th{font-weight:400;color:var(--ink2);text-align:left;padding:14px 10px 14px 0;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+td{padding:13px 10px 13px 0;border-top:1px solid var(--hair)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:9px;vertical-align:baseline}
+.ok .dot{background:var(--phos)}
+.warn .dot{background:var(--amber)}
+.down .dot{background:#C97A3C}
+.thin{color:var(--ink2);font-size:.72rem}
+.note{margin-top:22px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+.note a{color:var(--ink)}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>Feed status.</h1>
+  <p class="intro">The health of every feed behind the market, drawn from the same <a href="/api/stats">/api/stats</a> anyone can read. A dead feed shows as down and its rows flag stale &mdash; never silently reused. The money feeds refresh about every five minutes, catalog feeds every thirty.</p>
+
+  <div class="stats" id="stats">
+    <div><b id="s-offers">&mdash;</b><i>live offers</i></div>
+    <div><b id="s-feeds">&mdash;</b><i>feeds up</i></div>
+    <div><b id="s-idle">&mdash;</b><i>idle share</i></div>
+    <div><b id="s-book">&mdash;</b><i>orders resting</i></div>
+  </div>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Feed</th><th>Offers</th><th>Last read</th><th>State</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="4" class="thin" style="padding:22px 0">taking the reading&hellip;</td></tr></tbody>
+  </table></div>
+
+  <p class="note" id="asof"></p>
+  <p class="note">Staleness is declared, not hidden: a feed older than its cadence allows is flagged on every API row it serves. History of every poll lives in the provider-health series; the tape at <a href="/api/history">/api/history</a> is unaffected by a single missed read.</p>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/api/stats">raw</a> &middot; <a href="/faq/">fair questions</a></div></footer>
+<script>
+const $ = s => document.querySelector(s);
+function fmtAge(s){
+  if (s == null) return "—";
+  if (s < 90) return Math.round(s) + "s ago";
+  if (s < 5400) return Math.round(s / 60) + "m ago";
+  return (s / 3600).toFixed(1) + "h ago";
+}
+async function load(){
+  try{
+    const s = await (await fetch("/api/stats")).json();
+    $("#s-offers").textContent = (s.total_offers || 0).toLocaleString("en-US");
+    $("#s-idle").textContent = s.idle_share != null ? Math.round(s.idle_share * 100) + "%" : "—";
+    const rows = $("#rows");
+    rows.textContent = "";
+    const names = Object.keys(s.providers || {}).sort((a, b) =>
+      (s.providers[b].offers || 0) - (s.providers[a].offers || 0));
+    let up = 0;
+    names.forEach(n => {
+      const p = s.providers[n];
+      const dead = !p.offers;
+      const cls = dead ? "down" : p.stale ? "warn" : "ok";
+      if (!dead && !p.stale) up++;
+      const tr = document.createElement("tr");
+      tr.className = cls;
+      const c0 = document.createElement("td");
+      const d = document.createElement("span"); d.className = "dot";
+      c0.append(d, document.createTextNode(n));
+      const c1 = document.createElement("td"); c1.textContent = p.offers;
+      const c2 = document.createElement("td"); c2.className = "thin"; c2.textContent = fmtAge(p.age_seconds);
+      const c3 = document.createElement("td"); c3.className = "thin";
+      c3.textContent = dead ? "down" : p.stale ? "stale" : "ok";
+      tr.append(c0, c1, c2, c3);
+      rows.appendChild(tr);
+    });
+    $("#s-feeds").textContent = up + " / " + names.length;
+    $("#asof").textContent = "as of " + new Date((s.generated_at || 0) * 1000).toUTCString() + " — refreshes every 60s";
+  }catch(e){
+    $("#rows").innerHTML = '<tr><td colspan="4" class="thin" style="padding:22px 0">the market feed is unreachable right now — /api/stats will answer when it returns</td></tr>';
+  }
+  try{
+    const b = await (await fetch("/api/book")).json();
+    $("#s-book").textContent = b.open_orders != null ? b.open_orders : "—";
+  }catch(e){ $("#s-book").textContent = "—"; }
+}
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>

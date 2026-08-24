@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>compute.wick.pics: the competition</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;letter-spacing:-0.015em}
+h2{font-family:var(--serif);font-weight:600;font-size:1.55rem;letter-spacing:-0.01em;margin-top:64px}
+h2 + p{margin-top:10px;color:var(--ink2);max-width:64ch}
+.intro{margin-top:18px;color:var(--ink2);max-width:60ch}
+.note{margin-top:10px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+.note b{color:var(--amber);font-weight:600}
+.tscroll{overflow-x:auto;margin-top:26px;border-top:1px solid var(--hair)}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.76rem;min-width:640px}
+th{font-weight:400;color:var(--ink2);text-align:left;padding:13px 16px 13px 0;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;vertical-align:bottom}
+td{padding:13px 16px 13px 0;border-top:1px solid var(--hair);vertical-align:top}
+tr:hover td{background:rgba(232,237,233,.025)}
+td.p{color:var(--ink);font-weight:600;white-space:nowrap}
+td.p .us{color:var(--amber)}
+td .sub{display:block;color:var(--ink2);font-weight:400;font-size:.68rem;margin-top:2px;white-space:normal}
+td.d{color:var(--ink2);font-family:var(--sans);font-size:.85rem;min-width:26ch}
+td.rel{white-space:nowrap}
+.tag{display:inline-block;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--hair);border-radius:999px;color:var(--ink2)}
+.tag.src{color:var(--phos);border-color:rgba(127,217,154,.35)}
+.tag.comp{color:var(--amber);border-color:rgba(240,168,104,.4)}
+.grouphead td{border-top:1px solid var(--hair);padding-top:22px;color:var(--ink2);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:none !important}
+.mx td,.mx th{text-align:center;padding:12px 10px}
+.mx td:first-child,.mx th:first-child{text-align:left;padding-left:0;min-width:190px;white-space:normal}
+.mx th.usc{color:var(--amber)}
+.mx td{font-size:.82rem}
+.y{color:var(--phos);font-weight:600}
+.n{color:var(--ink2);opacity:.6}
+.h{color:var(--amber)}
+.mx td[title]{cursor:help}
+.keyline{margin-top:12px;font-family:var(--mono);font-size:.68rem;color:var(--ink2)}
+.keyline .y,.keyline .h{font-size:.78rem}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,56px);margin-top:26px}
+@media (max-width:860px){.cols3{grid-template-columns:1fr}}
+.swd{border-top:1px solid var(--hair);padding-top:20px}
+.swd h3{font-family:var(--mono);font-size:.68rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.swd.s h3{color:var(--phos)}
+.swd.w h3{color:var(--amber)}
+.swd ul{list-style:none;margin-top:14px}
+.swd li{padding:9px 0;border-top:1px solid rgba(232,237,233,.07);color:var(--ink2);font-size:.9rem}
+.swd li:first-child{border-top:0}
+.swd li b{color:var(--ink);font-weight:600}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main class="wrap">
+  <h1>The competition.</h1>
+  <p class="intro">Every player in the GPU-rental picture and where we sit among them, written plainly: the marketplaces we read, the brokers we compete with, the comparison sheets we out-live, and the giants that set the ceiling. Strengths and weaknesses ours included &mdash; a map drawn honestly is the only kind worth navigating by.</p>
+  <p class="note">compiled 2026-08-24 from public sources &middot; <span id="livecount">&hellip;</span></p>
+
+  <h2>The matrix.</h2>
+  <p>Capability by player class &mdash; the landscape below names every player. An honest tick for a rival is worth more than a flattering blank.</p>
+  <div class="tscroll"><table class="mx">
+    <thead><tr>
+      <th>Capability</th><th class="usc">us</th><th>Shadeform</th><th>Prime Intellect</th><th>SkyPilot</th><th>GPUsMarket</th><th>Sheets</th><th>Source markets</th><th>Hyperscalers</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>Live cross-provider book, normalized $/GPU/hr</td><td class="y" id="mx-book" title="10 feeds, ~1,700 offers; money feeds 5-min, catalogs 30-min">✓</td><td class="y" title="30+ clouds">✓</td><td class="y" title="~12 clouds">✓</td><td class="y" title="20+ clouds">✓</td><td class="n">—</td><td class="h" title="periodic tables, not a live book">~</td><td class="n" title="their own book only">—</td><td class="n">—</td></tr>
+      <tr><td>Price history you can query</td><td class="y" title="30-min tape per model+class, /api/history">✓</td><td class="n">—</td><td class="n">—</td><td class="y" title="spot trends, 30–180d windows">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="h" title="spot advisor-style tooling">~</td></tr>
+      <tr><td>Price alerts, no account</td><td class="y" title="tripwire: webhook + RSS, watch id is the key">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td>Standing limit orders (trigger → signed fill ticket → execution)</td><td class="y" title="keyholder sidecar: we hold the order, the user holds the key — no custody">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td>Workload-aware pricing (training / inference lenses)</td><td class="y" title="the price column re-prices the live book in TFLOPS·h/$ or VRAM GB·h/$; spec ceilings, unrated models named">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="h" title="some sheets list static price-per-TFLOP; none re-price a live book">~</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td>MCP / agent-native</td><td class="y" title="18 MCP tools, official registry listing">✓</td><td class="n" title="API + console for humans">—</td><td class="n">—</td><td class="h" title="CLI/SDK-first, not MCP">~</td><td class="y" title="agent-first CLI + MCP">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td>Rents machines through it</td><td class="y" title="BYO provider key; RunPod + Vast rails">✓</td><td class="y" title="reseller — one account, theirs">✓</td><td class="y">✓</td><td class="y" title="your cloud credentials">✓</td><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Zero platform fee, stated in the API</td><td class="y" title="fee_bps: 0 in every response">✓</td><td class="n" title="margin priced in">—</td><td class="n">—</td><td class="y" title="open source">✓</td><td class="n">—</td><td class="n">—</td><td class="n" title="the fee IS the price">—</td><td class="n">—</td></tr>
+      <tr><td>Keys/custody never leave you</td><td class="y" title="broker holds your key in RAM for the one call, never stored">✓</td><td class="n" title="you fund their account">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n" title="you are their customer">—</td><td class="n">—</td></tr>
+      <tr><td>One invoice across providers</td><td class="n" title="Stage 3, not built">—</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td>Hyperscaler prices in the book</td><td class="n" title="deliberate — our buyer is price-driven">—</td><td class="h" title="some via partner clouds">~</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">n/a</td></tr>
+      <tr><td>Owns hardware / gives SLAs</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="h" title="hosts do; the marketplace doesn't">~</td><td class="y">✓</td></tr>
+    </tbody>
+  </table></div>
+  <p class="keyline"><span class="y">✓</span> has it &nbsp;&middot;&nbsp; <span class="h">~</span> partly &nbsp;&middot;&nbsp; <span class="n">—</span> doesn't &nbsp;&middot;&nbsp; hover a cell for the caveat</p>
+
+
+  <h2>The landscape.</h2>
+  <p>Four kinds of player. A supplier can also be a rival; every feed we aggregate would rather you came to them directly.</p>
+  <div class="tscroll"><table>
+    <thead><tr><th>Player</th><th>What it is</th><th style="min-width:120px">Relationship</th></tr></thead>
+    <tbody>
+      <tr class="grouphead"><td colspan="3">Feeds we aggregate today &mdash; 10</td></tr>
+      <tr><td class="p">Vast.ai<span class="sub">the deep book</span></td><td class="d">Peer GPU marketplace; auction-priced, the cheapest interruptible capacity anywhere and the widest consumer-card variety. ~70% of our book.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">RunPod</td><td class="d">GPU cloud with community and secure tiers; serverless endpoints. Both our rental rails run here and on Vast.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">DataCrunch</td><td class="d">EU dedicated GPU cloud (Finland, green energy); clean per-model catalog.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">Akash</td><td class="d">Decentralized compute marketplace, crypto-settled; we read the network's minimum ask per model.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">Cudo Compute</td><td class="d">GPU cloud; closed to new customers since March 2026 &mdash; availability now "by request", which caps how useful its quotes are.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">io.net</td><td class="d">Decentralized GPU network (Solana); undocumented explorer market feed, read per-product.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">Hyperstack</td><td class="d">NexGen Cloud's GPU platform; flavors &times; pricebook &times; live stocks behind a free key. Live in the book since 2026-08-24.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">Novita</td><td class="d">GPU cloud with a products catalog and per-region offers; keyed. Live in the book since 2026-08-24.</td><td class="rel"><span class="tag src">source</span></td></tr>
+      <tr><td class="p">Prime Intellect<span class="sub">also a rival</span></td><td class="d">Aggregator we also read &mdash; its feed carries Lambda's book among others. Full row under direct competitors.</td><td class="rel"><span class="tag src">source</span> <span class="tag comp">competes</span></td></tr>
+      <tr><td class="p">Shadeform<span class="sub">also a rival</span></td><td class="d">Aggregator we also read (19 clouds via its feed). Full row under direct competitors.</td><td class="rel"><span class="tag src">source</span> <span class="tag comp">competes</span></td></tr>
+
+      <tr class="grouphead"><td colspan="3">Supply we can add, key-gated &mdash; 3</td></tr>
+      <tr><td class="p">TensorDock</td><td class="d">GPU marketplace; inventory API answers only for funded accounts ($5 minimum). Adapter written, waiting on the deposit.</td><td class="rel"><span class="tag">pending</span></td></tr>
+      <tr><td class="p">Lambda</td><td class="d">AI cloud with on-demand instances and clusters; free API key exposes prices + live regional capacity.</td><td class="rel"><span class="tag">pending</span></td></tr>
+      <tr><td class="p">Salad</td><td class="d">Distributed consumer-GPU network; customer prices need a key &mdash; its public feed is supplier earnings, the wrong side of the market to quote.</td><td class="rel"><span class="tag">pending</span></td></tr>
+
+      <tr class="grouphead"><td colspan="3">Direct competitors &mdash; aggregation &amp; brokerage</td></tr>
+      <tr><td class="p">Shadeform<span class="sub">the funded analog</span></td><td class="d">YC-backed GPU marketplace ($20M raised): one API and console over 30+ clouds, unified billing, routes to the cheapest instance. A reseller &mdash; you buy through them. Since 2026-08-24 also a feed in our book.</td><td class="rel"><span class="tag comp">competes</span> <span class="tag src">source</span></td></tr>
+      <tr><td class="p">Prime Intellect</td><td class="d">"Compute exchange" aggregating ~a dozen clouds, paired with decentralized training; rentals go through their platform. Since 2026-08-24 also a feed in our book.</td><td class="rel"><span class="tag comp">competes</span> <span class="tag src">source</span></td></tr>
+      <tr><td class="p">SkyPilot<span class="sub">GPU Compass</span></td><td class="d">Open-source multi-cloud launcher; its GPU Compass dashboard compares 20+ clouds and keeps spot-price history. You bring your own cloud accounts &mdash; the closest thing to our BYO-key stance.</td><td class="rel"><span class="tag comp">competes</span></td></tr>
+      <tr><td class="p">GPUsMarket</td><td class="d">Agent-first GPU rental with a CLI + MCP server &mdash; proof we are not the only ones who noticed agents buy compute; sells its own market rather than aggregating.</td><td class="rel"><span class="tag comp">competes</span></td></tr>
+      <tr><td class="p">Compute Exchange</td><td class="d">Compute auction/brokerage platform positioning around the 2026 capacity crunch.</td><td class="rel"><span class="tag comp">competes</span></td></tr>
+
+      <tr class="grouphead"><td colspan="3">Comparison sheets</td></tr>
+      <tr><td class="p">GetDeploying &middot; ComputePrices &middot; cloud-gpus.com &middot; GPU Finder&hellip;</td><td class="d">Static or periodically-refreshed price tables. Useful bookmarks; no live book, no history you can query, no alerts, no execution. This is the graveyard tier &mdash; and what we would be if we stopped at a table.</td><td class="rel"><span class="tag comp">competes</span></td></tr>
+
+      <tr class="grouphead"><td colspan="3">The backdrop</td></tr>
+      <tr><td class="p">AWS &middot; GCP &middot; Azure &middot; OCI</td><td class="d">The price ceiling and the quota wall. H100s at multiples of marketplace rates; enterprises pay it for the SLA. We don't quote them (yet) &mdash; deliberate, our buyer is price-driven.</td><td class="rel"><span class="tag">context</span></td></tr>
+      <tr><td class="p">CoreWeave &middot; Nebius &middot; Crusoe&hellip;</td><td class="d">Neoclouds that own the metal. They are who the brokers resell; several are also feeds inside Shadeform and Compass.</td><td class="rel"><span class="tag">context</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Where that leaves us.</h2>
+  <div class="cols3">
+    <div class="swd s">
+      <h3>Strengths</h3>
+      <ul>
+        <li><b>Agents are the first customer, not a feature.</b> Native MCP over the same core as the UI, listed in the official registry. Only GPUsMarket shares the thesis, and they sell one market &mdash; we aggregate.</li>
+        <li><b>Zero fee we can actually afford.</b> One process on commodity hosting; fee_bps: 0 published in every response. A $20M burn rate cannot copy this price.</li>
+        <li><b>BYO-key brokering.</b> We place rentals with your provider key and never store it. Every funded competitor wants to be your wallet instead.</li>
+        <li><b>The tape.</b> Price history per model and class recorded every half hour since first boot &mdash; a past no late entrant can backfill. Only SkyPilot keeps anything comparable.</li>
+        <li><b>The tripwire → limit orders.</b> Under-the-market alerts with no account — and since 2026-08-24 they execute: standing limit orders via signed fill tickets and the open-source keyholder sidecar, custody-free. Nobody else has either half, let alone the pipe.</li>
+        <li><b>Idle capacity as the editorial spine</b> &mdash; interruptible-first ranking, the idle index, the discount instrument. The cheap half of the market is our home turf, not an afterthought.</li>
+      </ul>
+    </div>
+    <div class="swd w">
+      <h3>Weaknesses</h3>
+      <ul>
+        <li><b>Ten feeds vs Shadeform's thirty.</b> Coverage is our thinnest wall; it grows a signup at a time.</li>
+        <li><b>The tape is young.</b> Days of history where Compass shows quarters. Time fixes this and only time.</li>
+        <li><b>No unified billing.</b> A team that wants one invoice across clouds goes to Shadeform or Prime Intellect today. That is Stage 3, unbuilt.</li>
+        <li><b>No hardware, no SLA, no enterprise story.</b> We are an instrument over other people's machines and say so.</li>
+        <li><b>No brand, no track record.</b> Unnamed product, zero testimonials, a book that has never had a paying renter through it.</li>
+        <li><b>No hyperscaler quotes</b> &mdash; deliberate, but it means the enterprise comparison shopper bounces.</li>
+      </ul>
+    </div>
+    <div class="swd">
+      <h3>Points of difference</h3>
+      <ul>
+        <li><b>Instrument, not reseller.</b> Everyone funded wants to sit between you and the provider and clip the flow. We read the market, point, and step aside &mdash; the renter pays the provider's own price.</li>
+        <li><b>Machine-first distribution.</b> Registry listing, llms.txt, keyless REST &mdash; discovered by agents, not ad spend.</li>
+        <li><b>Honesty as interface.</b> Stale flags shown, unrated models named, "not a forecast" printed on the timing instrument, fee stated in-band. In a market full of "from $0.99*" tables this reads different because it is.</li>
+        <li><b>A product with a world.</b> The pond, the frog, the field-journal voice &mdash; nobody mistakes this for another dashboard template, and nobody forgets it either.</li>
+        <li><b>The five-minute money book.</b> The feeds people actually rent from refresh every five minutes; the sleepy catalogs every thirty &mdash; and we print which is which. Sheets refresh weekly and hide it.</li>
+        <li><b>Every price carries its own tape.</b> Each row in the market table draws that model's last 24 hours inline, off history we recorded ourselves. A table a competitor can copy in a day; the tape behind it they cannot.</li>
+        <li><b>Accountless to the bone.</b> The book, the API, the MCP endpoint and the price alerts all work with no signup, no email, no cookie wall. Metering is an optional bearer token. Everyone else gates at the inbox.</li>
+        <li><b>The workload lens.</b> The price column itself answers "for MY work": flip the market table to training and it re-prices every card in FP16 TFLOPS-hours per dollar; flip it to inference and it prices the VRAM that actually gates serving; flip it to bandwidth and it prices the ceiling for memory-bound work. Spec-sheet ceilings, never benchmarks, unrated cards named and sunk — the honesty is what makes the comparison usable, and nobody else re-prices a live book this way.</li>
+        <li><b>Safety rails built for unattended buyers.</b> Rentals dry-run by default, price caps absolute, an optional budget guard that destroys the rental at the cap &mdash; its own failure mode disclosed in the receipt &mdash; and idempotent fills that cannot double-rent on a retry. Exchange-grade paranoia, documented.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+<footer><div class="wrap">compute.wick.pics &middot; <a href="/">back to the pond</a> &middot; sources: public sites &amp; docs, 2026-08-24 &middot; corrections welcome</div></footer>
+<script>
+fetch("/api/stats").then(r=>r.json()).then(d=>{
+  var el=document.getElementById("livecount");
+  if(d && d.total_offers) el.textContent="our book right now: "+d.total_offers.toLocaleString("en-US")+" offers from "+Object.keys(d.providers||{}).length+" feeds";
+  else el.textContent="";
+  var mx=document.getElementById("mx-book");
+  if(mx && d && d.total_offers) mx.title=d.total_offers.toLocaleString("en-US")+" live offers, 5-min poll";
+}).catch(function(){document.getElementById("livecount").textContent="";});
+</script>
+</body>
+</html>

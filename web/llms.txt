@@ -1,0 +1,89 @@
+# compute.wick.pics — the spot market for idle GPUs
+
+> Live GPU rental prices aggregated across marketplaces (Vast.ai, RunPod,
+> DataCrunch, Akash, Cudo Compute, io.net), normalized into one offer table,
+> ranked cheapest-first
+> by price per GPU per hour. Zero platform fees (fee_bps=0). No key, no
+> signup, no scraping required. Built for AI agents as much as for humans.
+
+## For agents (MCP)
+
+- Endpoint: https://compute.wick.pics/mcp/ (MCP streamable HTTP, stateless)
+- Tools: search_offers, get_offer, market_stats, price_history, idle_history,
+  best_value, provider_reliability, price_position, spot_spread,
+  create_watch, watch_status, delete_watch, register_account, account_usage,
+  rent_offer, rent_best, rental_status, destroy_rental
+- rent_offer / rent_best place a rental on YOUR provider key (Vast.ai or
+  RunPod) — dry-run by default, live only with confirm=true; the key passes
+  through one call and is never stored. auto_destroy_budget_usd arms a
+  budget cap that destroys the rental when estimated spend reaches it (the
+  key is then held in process memory only; a restart drops the guard and the
+  receipt says so). rental_status polls state + spend of a placed instance.
+- Integration guide: https://compute.wick.pics/agents/
+
+## REST API (JSON, no auth)
+
+- https://compute.wick.pics/api/offers — ranked live offers; filters: gpu,
+  country (ISO-2, comma list, or EU), region, offer_class
+  (on_demand|interruptible), provider, max_price, min_vram, min_gpu_count, per_model
+  (8 = full nodes), limit
+- https://compute.wick.pics/api/gpus — GPU models with offer counts and floors
+- https://compute.wick.pics/compare/ — side-by-side GPU comparison (deep-linkable: ?a=RTX+4090&b=H100+SXM)
+- https://compute.wick.pics/calc/ — job cost calculator: hours×GPUs or a TFLOPS-hours budget against the live floor of every model
+- https://compute.wick.pics/spot/ — the compute spot index: chained 10-model basket, methodology published (/api/index)
+- https://compute.wick.pics/wire/ — notable daily price moves off the tape (RSS at /wire.rss)
+- https://compute.wick.pics/receipts/ — the broker's own execution tape (house rentals, published)
+- https://compute.wick.pics/status/ — live feed health (same data as /api/stats)
+- https://compute.wick.pics/faq/ — fair questions, answered straight (FAQPage JSON-LD)
+- https://compute.wick.pics/api/specs — dense FP16 spec TFLOPS per model (the
+  workload lens; ceilings, not benchmarks; absent model = unrated)
+- https://compute.wick.pics/api/stats — market snapshot: totals, idle share,
+  provider health
+- https://compute.wick.pics/api/history?gpu=RTX%204090 — price history per
+  provider (min/median per GPU-hour)
+- https://compute.wick.pics/api/idle-history — the idle-capacity index series
+- POST https://compute.wick.pics/api/watches — accountless price alerts
+  (RSS feed + optional webhook; watches expire 30 days after creation)
+- https://compute.wick.pics/api/value — perf-per-dollar: FP16 spec TFLOPS
+  per dollar-hour at each model's best live price (basis disclosed)
+- https://compute.wick.pics/api/reliability — provider feed dependability
+- https://compute.wick.pics/api/timing?gpu=RTX%204090 — where today's best
+  price sits in its trailing 7/30-day range (descriptive, not a forecast)
+- https://compute.wick.pics/api/spread — on-demand vs interruptible discount
+  per model (gpu= adds its history)
+- POST https://compute.wick.pics/api/rentals — BYO-key rental execution on
+  Vast.ai or RunPod (dry_run default; re-quoted live before money moves;
+  idempotency_key + auto_destroy_budget_usd + account_token supported);
+  POST /api/rentals/best is the one-shot search+place;
+  POST /api/rentals/{provider}/{id}/status polls state and spend;
+  DELETE /api/rentals/{provider}/{id} tears it down
+- POST https://compute.wick.pics/api/account — optional metering account
+  (bearer token, shown once); GET /api/account/usage is your ledger
+- POST https://compute.wick.pics/api/orders — LIMIT ORDERS: standing "rent
+  when price <= line" intents. The station cuts an HMAC-signed fill ticket
+  when the line is crossed (webhook and/or long-poll POST /api/orders/{id}/
+  ticket) and NEVER holds your provider key — execution happens wherever the
+  key lives: the open-source keyholder sidecar (repo sidecar/), your own
+  agent, or POST /api/orders/{id}/fill with {order_secret, api_key,
+  confirm:true}. Fills re-quote live, refuse above the line, and are
+  idempotent per order. Guide: https://compute.wick.pics/agents/#sidecar
+
+- https://compute.wick.pics/api/openapi.json — full OpenAPI 3 spec of every
+  endpoint above (machine-readable, no key)
+
+## Pages
+
+- https://compute.wick.pics/ — the market, live, with price-history charts
+- https://compute.wick.pics/idle/ — the idle-capacity index
+- https://compute.wick.pics/agents/ — agent integration guide
+- https://compute.wick.pics/eco/ — the environmental case (utilization, honest)
+- https://compute.wick.pics/biz/ — enterprise: procurement price discovery
+
+## Honesty notes
+
+- Every number on the site comes from the live API; providers that stop
+  answering are flagged stale, never silently reused.
+- Prices are USD per hour; price_per_gpu_hr is the comparable unit across
+  multi-GPU offers. class=interruptible rows are idle capacity (spot/bid).
+- Outbound provider links may carry referral tags; the renter's price is
+  unchanged. Platform fee is currently zero (the fee_bps field states it).

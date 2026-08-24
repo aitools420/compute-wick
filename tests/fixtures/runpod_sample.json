@@ -1,0 +1,17 @@
+{"data": {"gpuTypes": [
+  {"id": "NVIDIA GeForce RTX 4090", "displayName": "RTX 4090", "memoryInGb": 24,
+   "secureCloud": true, "communityCloud": true,
+   "securePrice": 0.69, "communityPrice": 0.34,
+   "secureSpotPrice": null, "communitySpotPrice": 0.21, "maxGpuCount": 8,
+   "lowestPrice": {"stockStatus": "High"}},
+  {"id": "NVIDIA H100 80GB HBM3", "displayName": "H100 SXM", "memoryInGb": 80,
+   "secureCloud": true, "communityCloud": false,
+   "securePrice": 2.69, "communityPrice": null,
+   "secureSpotPrice": 1.34, "communitySpotPrice": null, "maxGpuCount": 8,
+   "lowestPrice": {"stockStatus": "Low"}},
+  {"id": "broken-row", "displayName": null, "memoryInGb": null,
+   "secureCloud": true, "communityCloud": true,
+   "securePrice": null, "communityPrice": null,
+   "secureSpotPrice": null, "communitySpotPrice": null, "maxGpuCount": 1,
+   "lowestPrice": null}
+]}}

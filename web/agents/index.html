@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent integration — compute.wick.pics</title>
+<meta name="description" content="Plug an AI agent into the GPU spot market: native MCP endpoint, clean JSON API, accountless price watches. No key, no signup.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/agents/">
+<meta property="og:title" content="Agent integration — compute.wick.pics">
+<meta property="og:description" content="Plug an AI agent into the GPU spot market: native MCP endpoint, clean JSON API, accountless price watches. No key, no signup.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/agents/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:62ch}
+section{margin-top:54px;padding-top:34px;border-top:1px solid var(--hair)}
+h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;letter-spacing:-0.01em}
+p{margin-top:10px;color:var(--ink2);max-width:70ch}
+p b{color:var(--ink);font-weight:600}
+pre{margin-top:16px;background:var(--raised);border:1px solid var(--hair);padding:18px 20px;overflow-x:auto;
+  font-family:var(--mono);font-size:.76rem;line-height:1.7;color:var(--ink)}
+code{font-family:var(--mono);font-size:.85em;color:var(--ink)}
+pre .c{color:var(--ink2)}
+pre .g{color:var(--phos)}
+pre .a{color:var(--amber)}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.76rem;margin-top:16px}
+th{font-weight:400;color:var(--ink2);text-align:left;padding:10px 14px 10px 0;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+td{padding:10px 14px 10px 0;border-top:1px solid var(--hair);vertical-align:top}
+td:first-child{white-space:nowrap;color:var(--phos)}
+.tablewrap{overflow-x:auto}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>Plug an agent into the pond.</h1>
+  <p class="intro">The whole GPU spot market &mdash; 1,700+ live offers from ten provider feeds &mdash; behind one MCP endpoint and one JSON API. Reading it needs no key, no signup, no scraping: an agent can price the market, watch for a number, and pick the cheapest machine in one call. Renting has honest boundaries: execution runs on <em>your</em> provider key, or on a resting limit order your own keyholder daemon fills &mdash; credentials never pass through us, and we hold no custody.</p>
+
+  <section>
+    <h2>MCP, natively.</h2>
+    <p>The endpoint speaks MCP streamable HTTP, stateless, at <b>https://compute.wick.pics/mcp/</b>.</p>
+    <div class="tablewrap"><table>
+      <tr><th>tool</th><th>what it answers</th></tr>
+      <tr><td>search_offers</td><td>ranked live offers &mdash; gpu, country (ISO-2, comma list, or EU), region, offer_class, max_price_per_gpu_hr, min_vram_gb, min_gpu_count (8 = full nodes), limit</td></tr>
+      <tr><td>get_offer</td><td>one offer by id</td></tr>
+      <tr><td>market_stats</td><td>totals, idle share, per-provider freshness and health</td></tr>
+      <tr><td>price_history</td><td>the tape for one GPU: per-provider min/median per GPU-hour over time</td></tr>
+      <tr><td>idle_history</td><td>the idle-capacity index series</td></tr>
+      <tr><td>best_value</td><td>perf-per-dollar &mdash; FP16 spec TFLOPS per dollar-hour at each model's best live price (spec-sheet basis, disclosed; unrated models named)</td></tr>
+      <tr><td>provider_reliability</td><td>how dependable each provider's feed has been (poll success), plus their own machine-reliability figure where reported</td></tr>
+      <tr><td>price_position</td><td>rent-now-or-wait context: today's best price as a percentile of its own trailing 7/30-day range &mdash; descriptive, never a forecast</td></tr>
+      <tr><td>spot_spread</td><td>the live on-demand vs interruptible discount per model; pass a model for its history</td></tr>
+      <tr><td>create_watch</td><td>arm a price tripwire; fires under your line, re-arms 2% above it</td></tr>
+      <tr><td>watch_status</td><td>a watch's state, recent events, best matching offer now</td></tr>
+      <tr><td>delete_watch</td><td>disarm and remove a watch</td></tr>
+      <tr><td>rent_offer</td><td>place a rental on YOUR provider key (Vast or RunPod) &mdash; dry-run by default, live only with confirm=true; the key passes through one call and is never stored</td></tr>
+      <tr><td>rent_best</td><td>one-shot: search the live book and place on the best match ("cheapest H100 under $2/hr, go"); walks past at most 3 already-gone offers, price cap absolute</td></tr>
+      <tr><td>rental_status</td><td>live state, uptime and estimated spend of an instance you placed; shows the budget guard if armed</td></tr>
+      <tr><td>destroy_rental</td><td>tear down an instance you placed, same pass-through key</td></tr>
+      <tr><td>register_account</td><td>optional metering account &mdash; bearer token shown once; pass as account_token on rent calls to build a ledger</td></tr>
+      <tr><td>account_usage</td><td>your metered ledger: placements, hours, estimated USD, platform fee (0 today)</td></tr>
+    </table></div>
+    <p><b>Claude Code</b> &mdash; one line:</p>
+    <pre>claude mcp add --transport http compute-wick https://compute.wick.pics/mcp/</pre>
+    <p><b>Claude Desktop</b> &mdash; recent versions connect to remote servers directly; add under <code>mcpServers</code> in <code>claude_desktop_config.json</code>. Older builds can bridge with <code>mcp-remote</code>:</p>
+    <pre>{ "mcpServers": {
+    "compute-wick": { <span class="a">"url"</span>: "https://compute.wick.pics/mcp/" }
+} }
+<span class="c">// or, over stdio:</span>
+{ "mcpServers": {
+    "compute-wick": { "command": "npx",
+                      "args": ["mcp-remote", "https://compute.wick.pics/mcp/"] }
+} }</pre>
+    <p><b>Python</b> (the <code>mcp</code> SDK):</p>
+    <pre>from mcp import ClientSession
+from mcp.client.streamable_http import streamable_http_client
+
+async with streamable_http_client(<span class="a">"https://compute.wick.pics/mcp/"</span>) as (r, w):
+    async with ClientSession(r, w) as session:
+        await session.initialize()
+        offers = await session.call_tool(<span class="g">"search_offers"</span>,
+                                         {"gpu": "H100", "limit": 5})
+<span class="c"># mcp SDK 1.x: streamablehttp_client, unpacks (r, w, _)</span></pre>
+    <p><b>LangChain / LangGraph</b> (via <code>langchain-mcp-adapters</code>):</p>
+    <pre>from langchain_mcp_adapters.client import MultiServerMCPClient
+
+client = MultiServerMCPClient({
+    "compute": {"transport": <span class="a">"streamable_http"</span>,
+                "url": "https://compute.wick.pics/mcp/"}})
+tools = await client.get_tools()   <span class="c"># hand these to any agent</span></pre>
+  </section>
+
+  <section>
+    <h2>Plain JSON, if you'd rather.</h2>
+    <p>Every MCP tool has a REST twin. No auth on any of them.</p>
+    <div class="tablewrap"><table>
+      <tr><th>endpoint</th><th>returns</th></tr>
+      <tr><td>GET /api/specs</td><td>the workload-lens spec table: dense FP16 tensor TFLOPS per model &mdash; spec-sheet ceilings, not benchmarks; absent model = unrated</td></tr>
+      <tr><td>GET /api/offers</td><td>ranked offers; filters gpu, country (ISO-2, comma list, or EU), region, offer_class, provider, max_price, min_vram, min_gpu_count, per_model (1 = each model&rsquo;s cheapest row), limit</td></tr>
+      <tr><td>GET /api/gpus</td><td>GPU models with counts, floors, idle tallies</td></tr>
+      <tr><td>GET /api/stats</td><td>market snapshot and provider health</td></tr>
+      <tr><td>GET /api/history</td><td>price tape per GPU (gpu=, offer_class=, hours=)</td></tr>
+      <tr><td>GET /api/idle-history</td><td>idle-capacity index series (hours=)</td></tr>
+      <tr><td>GET /api/value</td><td>perf-per-dollar board (offer_class=, min_vram=, limit=)</td></tr>
+      <tr><td>GET /api/reliability</td><td>provider feed dependability over the trailing window (days=)</td></tr>
+      <tr><td>GET /api/timing</td><td>price percentile vs trailing range for one model (gpu=, offer_class=)</td></tr>
+      <tr><td>GET /api/spread</td><td>on-demand vs interruptible discount per model (gpu= adds history)</td></tr>
+      <tr><td>POST /api/watches</td><td>arm a tripwire; returns private feed + status URLs</td></tr>
+      <tr><td>POST /api/rentals</td><td>rent an offer with your own provider key; dry_run=true by default returns the exact call it would make</td></tr>
+      <tr><td>POST /api/rentals/best</td><td>one-shot search+place with the same body plus search filters</td></tr>
+      <tr><td>POST /api/rentals/{provider}/{id}/status</td><td>live state + estimated spend (body: your api_key &mdash; keys never ride GET)</td></tr>
+      <tr><td>DELETE /api/rentals/{provider}/{id}</td><td>destroy an instance you placed (body: your api_key)</td></tr>
+      <tr><td>POST /api/account</td><td>optional metering account; GET /api/account/usage (Authorization: Bearer) reads the ledger</td></tr>
+    </table></div>
+    <pre>curl '<span class="a">https://compute.wick.pics/api/offers?gpu=4090&amp;max_price=0.30</span>'
+
+curl -X POST https://compute.wick.pics/api/watches \
+  -H 'Content-Type: application/json' \
+  -d '{"gpu": "H100", "max_price_per_gpu_hr": 1.50,
+       "offer_class": "interruptible",
+       "webhook_url": "https://your-agent.example/hook"}'</pre>
+    <p>When a watch trips, your webhook receives <code>{watch_id, gpu, line, best, ts}</code> where <code>best</code> is the full offer that crossed your line &mdash; including the link to rent it. Webhooks must resolve to public address space; watches re-arm when the price climbs 2% back over the line. Watches expire 30 days after creation (<code>expires_at</code> on every watch response) &mdash; re-create one to keep it standing.</p>
+    <p><b>Renting through the broker.</b> Bring your own Vast or RunPod API key. Every placement is re-quoted live with your key before money moves, refused if the live price exceeds your max_price_per_gpu_hr, and guarded by an optional idempotency_key so a retried request returns the first receipt instead of a second machine. Dry-run is the default; a live placement requires <code>confirm: true</code>.</p>
+    <p><b>The budget cap.</b> Pass <code>auto_destroy_budget_usd</code> and this station watches your rental every five minutes and destroys it when estimated spend (price &times; uptime, conservative) reaches the cap &mdash; the safety net for unattended agents. Plain about the mechanics: arming the cap keeps your key in process memory only, never disk; if the station restarts, the guard is gone while your rental keeps running, and every receipt that arms one says exactly that. Poll <code>rental_status</code> as your own backstop.</p>
+  </section>
+
+  <section id="sidecar">
+    <h2>Limit orders &amp; the keyholder.</h2>
+    <p>A watch tells you the price crossed your line. A <b>limit order</b> goes further: the station cuts a signed <b>fill ticket</b> naming the exact offer, and whoever holds your provider key executes it. The station never holds the key &mdash; that is the whole design.</p>
+<pre>curl -X POST https://compute.wick.pics/api/orders \
+  -H 'Content-Type: application/json' \
+  -d '{"gpu": "RTX 4090", "max_price_per_gpu_hr": 0.02,
+       "offer_class": "interruptible",
+       "auto_destroy_budget_usd": 1.0}'</pre>
+    <p>The response carries <code>order_secret</code> &mdash; shown once, it authenticates ticket reads and fills for this order only, and can rent nothing by itself. Three ways to execute when the ticket is cut:</p>
+    <p><b>1. The keyholder sidecar</b> (recommended): a ~115-line open-source stdlib-Python daemon you run on your own machine &mdash; it long-polls the order, verifies the ticket's HMAC signature, and fires the fill with your key from your side. Every safety property is readable in one sitting, and it dry-runs by default:</p>
+<pre><span class="c"># fetch it, read it, run it — stdlib only, no installs</span>
+curl -sO https://compute.wick.pics/sidecar/keyholder.py
+ORDER_ID=&lt;id&gt; ORDER_SECRET=&lt;secret&gt; PROVIDER_KEY=&lt;your vast/runpod key&gt; \
+  python3 keyholder.py          <span class="c"># dry-runs until you add CONFIRM=1</span></pre>
+    <p><b>A real pass, replayed.</b> The loop above, run against the live book on 2026&#8209;08&#8209;24 (dry-run; the order's line sat above the market, so the ticket cut on the next check):</p>
+<pre>keyholder: watching order 7dd9e5ee&hellip; <span class="c">(dry-run only — set CONFIRM=1)</span>
+keyholder: ticket — RTX 4090 on vast at <span class="a">$0.1215/GPU/hr</span> (line $0.2000)
+keyholder: receipt: {
+  "dry_run": true,
+  "would_place": { "method": "PUT",
+    "url": "https://console.vast.ai/api/v0/asks/46655716/", &hellip; },
+  "live_price_final_per_gpu_hr": 0.121481, "fee_bps": 0,
+  "note": "no rental was placed; repeat with dry_run=false
+           and confirm=true to execute" }
+keyholder: dry-run complete <span class="g">(order stays armed)</span>; set CONFIRM=1 for real fills.</pre>
+    <p><b>2. Your own agent:</b> long-poll <code>POST /api/orders/{id}/ticket</code> (<code>{order_secret, wait: 55}</code>), then <code>POST /api/orders/{id}/fill</code> with <code>{order_secret, api_key, confirm: true}</code>. MCP tools <code>create_limit_order</code> / <code>limit_order_status</code> / <code>fill_limit_order</code> wrap the same rail.</p>
+    <p><b>3. A human with curl</b>, if you like your fills artisanal.</p>
+    <p>Plain about the mechanics: triggers are checked on the station's poll cadence (every ~5 minutes against the keyed feeds; keyless catalogs refresh half-hourly &mdash; not tick-by-tick); a ticket lives ~4 minutes then the order re-arms; fills re-quote the live price and refuse above your line; the fill is idempotent per order, so a retry can never rent a second machine; orders expire after 30 days.</p>
+  </section>
+
+  <section>
+    <h2>Ground rules.</h2>
+    <p><b>Honest data.</b> A provider that stops answering is recorded as down and its rows are flagged <code>stale</code> &mdash; never silently reused. Every price passes through one fee seam; <code>fee_bps</code> is currently <b>0</b> and the field says so on every response.</p>
+    <p><b>Referral disclosure.</b> Outbound provider links may carry referral tags. The renter's price is unchanged; that margin is how a zero-fee index pays for itself.</p>
+    <p><b>Courtesy.</b> The money feeds (Vast, RunPod) refresh about every five minutes and the keyless catalogs every thirty, so polling faster than that buys you nothing. For "tell me when", use a watch instead of a loop.</p>
+  </section>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/llms.txt">llms.txt</a> &middot; <a href="/idle/">the idle index</a></div></footer>
+</body>
+</html>

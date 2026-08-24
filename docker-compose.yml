@@ -1,0 +1,13 @@
+services:
+  compute:
+    build: .
+    ports:
+      - "127.0.0.1:8956:8956"
+    volumes:
+      - compute-data:/data
+    env_file:
+      - path: .env
+        required: false
+    restart: unless-stopped
+volumes:
+  compute-data:

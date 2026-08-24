@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The compute spot index — compute.wick.pics</title>
+<meta name="description" content="A chained, methodology-published index of GPU spot rental pricing: ten-model basket, per-provider medians, geometric chaining. Free, auditable, raw JSON one click away.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/spot/">
+<meta property="og:title" content="The compute spot index — compute.wick.pics">
+<meta property="og:description" content="One citable number for GPU spot pricing. Chained methodology, published in full, free to audit.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/spot/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:60ch}
+.hero{margin:44px 0 6px;padding:26px 28px;background:var(--raised);border:1px solid var(--hair)}
+.hero strong{display:block;font-family:var(--mono);font-weight:700;font-size:clamp(2.6rem,7vw,4rem);line-height:1.05;letter-spacing:-.02em}
+.hero strong small{font-size:.35em;color:var(--ink2);font-weight:400;letter-spacing:0}
+.hero span{display:block;margin-top:10px;font-family:var(--mono);font-size:.74rem;color:var(--ink2);max-width:56ch}
+.up{color:var(--amber)}
+.down{color:var(--phos)}
+.chartwrap{margin-top:30px;border-top:1px solid var(--hair);padding-top:10px}
+#chart{display:block;width:100%;height:auto}
+#chart text{font-family:var(--mono);font-size:11px;fill:var(--ink2)}
+.sec{margin-top:44px;padding-top:30px;border-top:1px solid var(--hair)}
+.sec h2{font-family:var(--serif);font-weight:600;font-size:1.4rem;letter-spacing:-0.01em}
+.sec p{margin-top:10px;color:var(--ink2);max-width:64ch}
+.sec p b{color:var(--ink);font-weight:600}
+.basket{margin-top:14px;font-family:var(--mono);font-size:.76rem;color:var(--ink2);line-height:2}
+.basket span{border:1px solid var(--hair);border-radius:999px;padding:4px 12px;margin-right:8px;white-space:nowrap;display:inline-block}
+.note{margin-top:22px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+.note a{color:var(--ink)}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>The compute spot index.</h1>
+  <p class="intro">One citable number for GPU spot pricing: a ten-model basket over every feed we read, chained so that coverage changes <em>cannot</em> move it &mdash; only prices can. The methodology is published in full below and the raw series is one click away. Free to read, free to audit.</p>
+
+  <div class="hero">
+    <strong id="level">&hellip;</strong>
+    <span id="sub">reading the tape&hellip;</span>
+  </div>
+
+  <div class="chartwrap"><svg id="chart" viewBox="0 0 960 240" role="img" aria-label="Compute spot index level over time"></svg></div>
+
+  <div class="sec">
+    <h2>Methodology, in full.</h2>
+    <p><b>Basket:</b> ten fixed models spanning datacenter, workstation and consumer silicon, each with multi-provider coverage at inception:</p>
+    <p class="basket" id="basket"></p>
+    <p><b>Construction:</b> per model, per half-hour snapshot, we take each provider&rsquo;s <em>median</em> listed $/GPU/hr &mdash; medians, so no single strange listing matters. Between adjacent snapshots a model compares <b>only providers present on both sides</b>; the index step is the geometric mean of those model ratios, and levels chain from 100 at inception. A new feed joining the panel therefore cannot move the index &mdash; that is the difference between an index and a coverage counter. The headline uses on-demand listings only (firm prices); the same construction over interruptible listings is published as the <b>idle sub-index</b>, volatile by nature. Steps with fewer than five chainable models carry flat and are counted openly in the payload.</p>
+    <p><b>Revision policy:</b> the basket and construction are frozen as v1; any change arrives as an announced version bump, never a silent edit.</p>
+  </div>
+
+  <div class="sec">
+    <h2>Why now.</h2>
+    <p>Compute is becoming a traded commodity: CME Group and Silicon Data list the first regulated compute futures on <b>October 5, 2026</b> &mdash; contracts settling on proprietary H100 and B200 rental indexes. This index is the open counterpart: methodology in full view, every input on our public tape, per-model series for the contracts&rsquo; own underlyings readable straight from <a href="/api/history?gpu=H100%20SXM">/api/history</a>. When someone asks &ldquo;what did GPU spot do this month&rdquo;, the answer shouldn&rsquo;t live behind a license.</p>
+  </div>
+
+  <div class="sec">
+    <h2>Honesty box.</h2>
+    <p>The index is <b>young</b> &mdash; its tape starts 23 Aug 2026, and the page you are reading will still say so when that sentence is embarrassing. It measures <em>listed</em> marketplace prices, not negotiated contracts or hyperscaler rates. An index over listing medians moves when cheap inventory is absorbed as well as when hosts reprice: both are real market signal, and we name both.</p>
+  </div>
+
+  <p class="note">Raw: <a href="/api/index">/api/index</a> (full series, both indexes, gap counts). The tape behind it: <a href="/api/history">/api/history</a>.</p>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/wire/">market wire</a> &middot; <a href="/faq/">fair questions</a></div></footer>
+<script>
+const $ = s => document.querySelector(s);
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); return n; };
+fetch("/api/index").then(r => r.json()).then(d => {
+  const od = d.on_demand || {};
+  const s = od.series || [];
+  $("#basket").innerHTML = (d.basket || []).map(m => "<span>" + m + "</span>").join("");
+  if (!s.length){ $("#sub").textContent = "the tape is too young to chain yet — check back within the hour"; return; }
+  const lvl = od.level, first = s[0], last = s[s.length - 1];
+  const delta = lvl - 100;
+  $("#level").innerHTML = lvl.toFixed(2) + " <small>on-demand · base 100</small>";
+  const days = ((last.ts - first.ts) / 86400);
+  const dtxt = (delta >= 0 ? "+" : "") + delta.toFixed(2) + "% since inception " + new Date(first.ts * 1000).toISOString().slice(0, 10) + " (" + (days < 2 ? Math.round(days * 24) + "h" : days.toFixed(1) + "d") + " of tape)";
+  const idle = (d.idle_sub_index || {}).level;
+  $("#sub").innerHTML = '<span class="' + (delta >= 0 ? "up" : "down") + '">' + dtxt + "</span>" +
+    (idle != null ? " · idle sub-index " + idle.toFixed(2) : "") + " · v" + d.version;
+  // chart
+  const svg = $("#chart"), W = 960, H = 240, P = 34;
+  const xs = s.map(p => p.ts), ys = s.map(p => p.level);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const lo = Math.min(...ys, 100) - 1, hi = Math.max(...ys, 100) + 1;
+  const X = t => P + (t - x0) / Math.max(1, x1 - x0) * (W - P * 2);
+  const Y = v => H - P + (v - lo) / (hi - lo) * (P * 2 - H);
+  svg.appendChild(el("line", { x1: P, y1: Y(100), x2: W - P, y2: Y(100), stroke: "rgba(232,237,233,.18)", "stroke-dasharray": "3 5" }));
+  const t100 = el("text", { x: W - P + 4, y: Y(100) + 4 }); t100.textContent = "100"; svg.appendChild(t100);
+  svg.appendChild(el("polyline", { points: s.map(p => X(p.ts).toFixed(1) + "," + Y(p.level).toFixed(1)).join(" "),
+    fill: "none", stroke: "#F0A868", "stroke-width": "2", "stroke-linejoin": "round" }));
+  svg.appendChild(el("circle", { cx: X(last.ts).toFixed(1), cy: Y(last.level).toFixed(1), r: "3", fill: "#F0A868" }));
+  const tl = el("text", { x: X(last.ts) - 8, y: Y(last.level) - 10, "text-anchor": "end" });
+  tl.textContent = last.level.toFixed(1); svg.appendChild(tl);
+  [x0, x1].forEach((t, i) => {
+    const tx = el("text", { x: i ? W - P : P, y: H - 8, "text-anchor": i ? "end" : "start" });
+    tx.textContent = new Date(t * 1000).toISOString().slice(5, 16).replace("T", " ") + "Z";
+    svg.appendChild(tx);
+  });
+}).catch(() => { $("#sub").textContent = "the index is unreachable right now — /api/index will answer when it returns"; });
+</script>
+</body>
+</html>

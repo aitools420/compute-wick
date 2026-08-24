@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The environmental case — compute.wick.pics</title>
+<meta name="description" content="Routing GPU demand to idle, already-racked hardware: the utilization argument, evidenced by one measured number — no invented carbon figures.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://compute.wick.pics/eco/">
+<meta property="og:title" content="The environmental case — compute.wick.pics">
+<meta property="og:description" content="Routing GPU demand to idle, already-racked hardware: the utilization argument, evidenced by one measured number — no invented carbon figures.">
+<meta property="og:image" content="https://compute.wick.pics/og.png">
+<meta property="og:url" content="https://compute.wick.pics/eco/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="compute.wick.pics">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Erode';src:url('/fonts/erode-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--stock:#0C110E;--raised:#121814;--ink:#E8EDE9;--ink2:#A8B3AA;--hair:rgba(232,237,233,.14);--amber:#F0A868;--phos:#7FD99A;
+  --serif:'Erode',Georgia,serif;--mono:'Martian Mono',ui-monospace,monospace;--sans:system-ui,-apple-system,'Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--stock);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+header{padding:26px 0}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.wordmark span{color:var(--ink2);font-weight:300}
+a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+main{padding:clamp(40px,8vh,90px) 0 110px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.08;letter-spacing:-0.015em}
+.intro{margin-top:18px;color:var(--ink2);max-width:58ch}
+.live{margin:44px 0 6px;padding:26px 28px;background:var(--raised);border:1px solid var(--hair)}
+.live strong{display:block;font-family:var(--mono);font-weight:700;font-size:clamp(2.6rem,7vw,4rem);color:var(--phos);line-height:1.05;letter-spacing:-.02em}
+.live span{display:block;margin-top:10px;font-family:var(--mono);font-size:.74rem;color:var(--ink2);max-width:52ch}
+.point{margin-top:44px;padding-top:30px;border-top:1px solid var(--hair)}
+.point h2{font-family:var(--serif);font-weight:600;font-size:1.4rem;letter-spacing:-0.01em}
+.point p{margin-top:10px;color:var(--ink2);max-width:62ch}
+.point p b{color:var(--ink);font-weight:600}
+footer{border-top:1px solid var(--hair);padding:34px 0 50px;font-family:var(--mono);font-size:.72rem;color:var(--ink2)}
+footer a{color:var(--ink2)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="wordmark" href="/">compute<span>.wick.pics</span></a></div></header>
+<main>
+<div class="wrap">
+  <h1>The greenest GPU is the one already racked.</h1>
+  <p class="intro">Every offer this site routes toward is a machine that exists today: bought, shipped, racked, powered &mdash; and waiting. Using it displaces demand for another machine, not for another data center.</p>
+
+  <div class="live">
+    <strong id="pct">&hellip;</strong>
+    <span id="sub">reading the market&hellip;</span>
+  </div>
+
+  <div class="point">
+    <h2>Utilization before expansion.</h2>
+    <p>An idle GPU is manufacturing footprint already spent, producing nothing. The industry's default answer to demand is more hardware; the cheaper and cleaner answer, wherever it fits, is <b>more work per machine that already exists</b>. That is the entire product: a market that makes the idle machine the easiest one to find.</p>
+  </div>
+
+  <div class="point">
+    <h2>The arithmetic of an already-built card.</h2>
+    <p>A GPU's footprint is paid twice: once in the factory, once at the wall. The factory share &mdash; fabrication, packaging, the data-center shell built around the rack &mdash; is spent the day the machine lands, whether it ever works or not. Put a job on an idle card and the only <b>new</b> cost is the marginal wall-power of the work itself; the host was already drawing standby power in a cooled room. Meet the same demand with new hardware instead and the factory cost is paid all over again &mdash; plus the standby draw of one more machine that will, in turn, sit idle between jobs. We publish no number for the factory share, because we cannot meter it from here; published server life-cycle assessments put it at a material double-digit fraction of lifetime emissions, and the displacement argument holds at any value in that range.</p>
+  </div>
+
+  <div class="point">
+    <h2>For the Scope&nbsp;3 reader.</h2>
+    <p>Plainly: renting through this market gives you <b>no certificate and no line-item for your inventory</b> &mdash; we do attributional carbon accounting for nobody, ourselves included. The claim on this page is consequential, not attributional: hours served on existing slack are hours that never help justify the next rack. If your framework counts certificates, this page offers none &mdash; and that refusal is exactly what the number above is worth.</p>
+  </div>
+
+  <div class="point">
+    <h2>Idle capacity is demand-shaped, not wasted.</h2>
+    <p>Interruptible listings are slack in the grid of compute &mdash; priced low precisely because they are spare. Batch jobs, training runs, render queues and agent workloads can soak that slack instead of pulling new capacity online. The market does the routing; the price does the persuading.</p>
+  </div>
+
+  <div class="point">
+    <h2>What we refuse to publish.</h2>
+    <p>No carbon calculators, no offsets, no green badges, no wattage we didn't meter. Claims like that need measurements we don't have &mdash; so we don't make them. We publish exactly one environmental number: the share of the listed market sitting idle, <b>measured from live listings and recorded every half hour</b>. It's charted on <a href="/idle/">the idle-capacity index</a>, and it comes with its caveats attached.</p>
+  </div>
+</div>
+</main>
+<footer><div class="wrap">the field station &middot; <a href="/">back to the pond</a> &middot; <a href="/idle/">the idle index</a></div></footer>
+<script>
+fetch("/api/stats").then(r => r.json()).then(s => {
+  document.getElementById("pct").textContent = s.idle_share != null ? (s.idle_share * 100).toFixed(1) + "%" : "—";
+  document.getElementById("sub").textContent = "of the " + s.total_offers +
+    " GPU offers listed across " + Object.keys(s.providers).length +
+    " feeds right now are idle machines looking for work — measured, not modeled";
+}).catch(() => { document.getElementById("sub").textContent = "the market feed is unreachable right now"; });
+</script>
+</body>
+</html>

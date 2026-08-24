@@ -1,0 +1,45 @@
+{
+ "data": [
+  {
+   "id": "26",
+   "name": "RTX 4090 24GB",
+   "availableDeploy": false,
+   "price": "67000",
+   "regions": [
+    "US-01 (Dallas)"
+   ]
+  },
+  {
+   "id": "4090.16c62g",
+   "name": "RTX 4090 24GB",
+   "availableDeploy": true,
+   "price": "33000",
+   "regions": [
+    "EU-GER-02 (Germany)",
+    "JP-TYO-02 (Japan)",
+    "US-CA-06 (California)"
+   ]
+  },
+  {
+   "id": "H100-80GB.16c128g",
+   "name": "H100 SXM 80GB",
+   "availableDeploy": true,
+   "price": "339000",
+   "regions": [
+    "EU-IS-01 (Iceland)",
+    "US-CA-07 (California)"
+   ]
+  },
+  {
+   "id": "L40S.22c125g",
+   "name": "NVIDIA L40S 48GB",
+   "availableDeploy": true,
+   "price": "55000",
+   "regions": [
+    "AF-ZA-01 (South Africa)",
+    "AS-AE-01 (UAE)",
+    "AS-IN-01 (India)"
+   ]
+  }
+ ]
+}
