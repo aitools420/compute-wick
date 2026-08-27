@@ -13,10 +13,19 @@ venv/bin/uvicorn app:app --port 8956
 ```
 No external services, no keys required (keys in `.env` deepen Vast/RunPod results; DataCrunch and Akash need none).
 
-## The fee lever
-`core/economics.py` is the single choke point every outbound price passes through.
-`FEE_BPS=0` at launch. Turning fees on = set the env var, restart. `REF_VAST` /
-`REF_RUNPOD` referral slots ride the same seam.
+## The fee levers — there are two, and confusing them corrupts the data
+
+`FEE_BPS` (`core/economics.py`) marks up **displayed** prices, and it is **0, permanently**.
+The book, the tape, the index and the per-chip prices are published as THE MARKET's numbers —
+check any of them against the provider's own page. A markup here would quietly make every
+published price ours instead of theirs, so this lever stays off.
+
+`EXEC_FEE_BPS` is the **platform fee**, charged on what we settle, never on what the provider
+charges: **2.5%, one cent minimum, capped at $5 per lease per UTC day** (`core/meter.py`).
+Renters place on their own provider key and pay the provider directly; this is the only thing
+we take, and it is disclosed in the quote and the receipt before anything is placed.
+
+`REF_VAST` / `REF_RUNPOD` referral slots ride the same seam.
 
 ## Layout
 `providers/` one drop-in module per marketplace · `core/` schema, rank, economics,
