@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""keyholder — the self-hosted execution half of a compute.wick.pics limit order.
+"""keyholder — the self-hosted execution half of a compute.pangle.online limit order.
 
 Runs on YOUR machine. Holds YOUR provider API key (env var, never sent anywhere
 except the fill call, which the station passes through to the provider without
@@ -10,7 +10,7 @@ Environment:
   ORDER_ID        (required) from create order
   ORDER_SECRET    (required) shown once at create
   PROVIDER_KEY    (required) your own Vast.ai or RunPod API key
-  COMPUTE_URL     default https://compute.wick.pics
+  COMPUTE_URL     default https://compute.pangle.online
   CONFIRM         "1" places the rental FOR REAL; anything else dry-runs
   ACCOUNT_TOKEN   optional usage-ledger token
   IMAGE, DISK_GB  optional runtime knobs passed to the fill
@@ -29,7 +29,7 @@ import time
 import urllib.error
 import urllib.request
 
-BASE = os.environ.get("COMPUTE_URL", "https://compute.wick.pics").rstrip("/")
+BASE = os.environ.get("COMPUTE_URL", "https://compute.pangle.online").rstrip("/")
 ORDER_ID = os.environ.get("ORDER_ID", "")
 SECRET = os.environ.get("ORDER_SECRET", "")
 KEY = os.environ.get("PROVIDER_KEY", "")

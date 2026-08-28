@@ -105,7 +105,7 @@ def rss_xml(site: str) -> str:
     now = time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(w["generated_at"]))
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<rss version="2.0"><channel>',
-           f"<title>the market wire — compute.wick.pics</title>",
+           f"<title>the market wire — compute.pangle.online</title>",
            f"<link>{site}/wire/</link>",
            "<description>Notable moves in GPU spot prices, from the station's own tape."
            " Moves under 5% don't make the wire.</description>",

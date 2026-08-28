@@ -1,9 +1,9 @@
-# compute.wick.pics — GPU compute meta-aggregator
+# compute.pangle.online — GPU compute meta-aggregator
 
-![live H100 spot](https://compute.wick.pics/badge.svg?gpu=H100) ![live RTX 4090 idle](https://compute.wick.pics/badge.svg?gpu=4090&offer_class=interruptible)
+![live H100 spot](https://compute.pangle.online/badge.svg?gpu=H100) ![live RTX 4090 idle](https://compute.pangle.online/badge.svg?gpu=4090&offer_class=interruptible)
 
 One process: provider pollers + SQLite store + ranked REST API + MCP server + the site.
-Live at https://compute.wick.pics · API `/api/offers`, `/api/history`, `/api/idle-history`, `/api/watches` · MCP `/mcp/` (streamable HTTP).
+Live at https://compute.pangle.online · API `/api/offers`, `/api/history`, `/api/idle-history`, `/api/watches` · MCP `/mcp/` (streamable HTTP).
 
 ## Run anywhere (the VPS lift)
 ```

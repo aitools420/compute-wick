@@ -1,4 +1,4 @@
-"""compute.wick.pics — one process: poll scheduler + JSON API + MCP + static site.
+"""compute.pangle.online — one process: poll scheduler + JSON API + MCP + static site.
 Run: venv/bin/uvicorn app:app --port $PORT   (or python app.py)"""
 import asyncio
 import contextlib
@@ -119,7 +119,7 @@ async def lifespan(_app):
     task.cancel()
     guard_task.cancel()
 
-app = FastAPI(title="compute.wick.pics", lifespan=lifespan, docs_url=None,
+app = FastAPI(title="compute.pangle.online", lifespan=lifespan, docs_url=None,
               redoc_url=None, openapi_url="/api/openapi.json")
 
 @app.middleware("http")
@@ -266,17 +266,17 @@ def api_watch_feed(wid: str):
             o = ev.get("offer", {})
             desc = (f"{o.get('provider','?')} has {o.get('gpu_model','?')} at "
                     f"${ev['price']:g}/GPU/hr ({o.get('class','?')})")
-            link = escape(o.get("link") or "https://compute.wick.pics/", {'"': "&quot;"})
+            link = escape(o.get("link") or "https://compute.pangle.online/", {'"': "&quot;"})
         else:
             desc = f"price back over the line at ${ev['price']:g}/GPU/hr — watch re-armed"
-            link = "https://compute.wick.pics/"
+            link = "https://compute.pangle.online/"
         items.append(
             f"<item><title>{escape(desc)}</title><link>{link}</link>"
             f"<pubDate>{ts}</pubDate>"
             f"<guid isPermaLink=\"false\">{wid}-{ev['ts']}-{ev['kind']}</guid></item>")
     xml = (f"<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\"><channel>"
-           f"<title>{title} — compute.wick.pics tripwire</title>"
-           f"<link>https://compute.wick.pics/</link>"
+           f"<title>{title} — compute.pangle.online tripwire</title>"
+           f"<link>https://compute.pangle.online/</link>"
            f"<description>Fires when the best live fee-adjusted price crosses the line.</description>"
            + "".join(items) + "</channel></rss>")
     return Response(content=xml, media_type="application/rss+xml")
@@ -317,7 +317,7 @@ def api_order_create(request: Request, payload: dict = Body(...)):
             "status_url": f"/api/orders/{o['id']}",
             "ticket_url": f"/api/orders/{o['id']}/ticket",
             "fill_url": f"/api/orders/{o['id']}/fill",
-            "sidecar": "https://compute.wick.pics/agents/#sidecar",
+            "sidecar": "https://compute.pangle.online/agents/#sidecar",
             "cadence_note": ("the book refreshes every poll cycle; triggers are"
                              " checked on that cadence, not tick-by-tick")}
 
@@ -333,7 +333,7 @@ def api_wire():
 
 @app.get("/wire.rss")
 def wire_rss():
-    return Response(wire.rss_xml("https://compute.wick.pics"),
+    return Response(wire.rss_xml("https://compute.pangle.online"),
                     media_type="application/rss+xml")
 
 @app.get("/api/receipts")

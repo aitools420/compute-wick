@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agent integration — compute.wick.pics</title>
+<title>Agent integration — compute.pangle.online</title>
 <meta name="description" content="Plug an AI agent into the GPU spot market: native MCP endpoint, clean JSON API, accountless price watches. No key, no signup.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="canonical" href="https://compute.wick.pics/agents/">
-<meta property="og:title" content="Agent integration — compute.wick.pics">
+<link rel="canonical" href="https://compute.pangle.online/agents/">
+<meta property="og:title" content="Agent integration — compute.pangle.online">
 <meta property="og:description" content="Plug an AI agent into the GPU spot market: native MCP endpoint, clean JSON API, accountless price watches. No key, no signup.">
-<meta property="og:image" content="https://compute.wick.pics/og.png">
-<meta property="og:url" content="https://compute.wick.pics/agents/">
+<meta property="og:image" content="https://compute.pangle.online/og.png">
+<meta property="og:url" content="https://compute.pangle.online/agents/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="compute.wick.pics">
+<meta property="og:site_name" content="compute.pangle.online">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 @font-face{font-family:'Erode';src:url('/fonts/erode-400.woff2') format('woff2');font-weight:400;font-display:swap}
@@ -62,7 +62,7 @@ footer a:hover{color:var(--ink)}
 
   <section>
     <h2>MCP, natively.</h2>
-    <p>The endpoint speaks MCP streamable HTTP, stateless, at <b>https://compute.wick.pics/mcp/</b>.</p>
+    <p>The endpoint speaks MCP streamable HTTP, stateless, at <b>https://compute.pangle.online/mcp/</b>.</p>
     <div class="tablewrap"><table>
       <tr><th>tool</th><th>what it answers</th></tr>
       <tr><td>search_offers</td><td>ranked live offers &mdash; gpu, country (ISO-2, comma list, or EU), region, offer_class, max_price_per_gpu_hr, min_vram_gb, min_gpu_count (8 = full nodes), limit</td></tr>
@@ -85,21 +85,21 @@ footer a:hover{color:var(--ink)}
       <tr><td>account_usage</td><td>your metered ledger: placements, hours, estimated USD, platform fee (0 today)</td></tr>
     </table></div>
     <p><b>Claude Code</b> &mdash; one line:</p>
-    <pre>claude mcp add --transport http compute-wick https://compute.wick.pics/mcp/</pre>
+    <pre>claude mcp add --transport http compute-wick https://compute.pangle.online/mcp/</pre>
     <p><b>Claude Desktop</b> &mdash; recent versions connect to remote servers directly; add under <code>mcpServers</code> in <code>claude_desktop_config.json</code>. Older builds can bridge with <code>mcp-remote</code>:</p>
     <pre>{ "mcpServers": {
-    "compute-wick": { <span class="a">"url"</span>: "https://compute.wick.pics/mcp/" }
+    "compute-wick": { <span class="a">"url"</span>: "https://compute.pangle.online/mcp/" }
 } }
 <span class="c">// or, over stdio:</span>
 { "mcpServers": {
     "compute-wick": { "command": "npx",
-                      "args": ["mcp-remote", "https://compute.wick.pics/mcp/"] }
+                      "args": ["mcp-remote", "https://compute.pangle.online/mcp/"] }
 } }</pre>
     <p><b>Python</b> (the <code>mcp</code> SDK):</p>
     <pre>from mcp import ClientSession
 from mcp.client.streamable_http import streamable_http_client
 
-async with streamable_http_client(<span class="a">"https://compute.wick.pics/mcp/"</span>) as (r, w):
+async with streamable_http_client(<span class="a">"https://compute.pangle.online/mcp/"</span>) as (r, w):
     async with ClientSession(r, w) as session:
         await session.initialize()
         offers = await session.call_tool(<span class="g">"search_offers"</span>,
@@ -110,7 +110,7 @@ async with streamable_http_client(<span class="a">"https://compute.wick.pics/mcp
 
 client = MultiServerMCPClient({
     "compute": {"transport": <span class="a">"streamable_http"</span>,
-                "url": "https://compute.wick.pics/mcp/"}})
+                "url": "https://compute.pangle.online/mcp/"}})
 tools = await client.get_tools()   <span class="c"># hand these to any agent</span></pre>
   </section>
 
@@ -136,9 +136,9 @@ tools = await client.get_tools()   <span class="c"># hand these to any agent</sp
       <tr><td>DELETE /api/rentals/{provider}/{id}</td><td>destroy an instance you placed (body: your api_key)</td></tr>
       <tr><td>POST /api/account</td><td>optional metering account; GET /api/account/usage (Authorization: Bearer) reads the ledger</td></tr>
     </table></div>
-    <pre>curl '<span class="a">https://compute.wick.pics/api/offers?gpu=4090&amp;max_price=0.30</span>'
+    <pre>curl '<span class="a">https://compute.pangle.online/api/offers?gpu=4090&amp;max_price=0.30</span>'
 
-curl -X POST https://compute.wick.pics/api/watches \
+curl -X POST https://compute.pangle.online/api/watches \
   -H 'Content-Type: application/json' \
   -d '{"gpu": "H100", "max_price_per_gpu_hr": 1.50,
        "offer_class": "interruptible",
@@ -151,7 +151,7 @@ curl -X POST https://compute.wick.pics/api/watches \
   <section id="sidecar">
     <h2>Limit orders &amp; the keyholder.</h2>
     <p>A watch tells you the price crossed your line. A <b>limit order</b> goes further: the station cuts a signed <b>fill ticket</b> naming the exact offer, and whoever holds your provider key executes it. The station never holds the key &mdash; that is the whole design.</p>
-<pre>curl -X POST https://compute.wick.pics/api/orders \
+<pre>curl -X POST https://compute.pangle.online/api/orders \
   -H 'Content-Type: application/json' \
   -d '{"gpu": "RTX 4090", "max_price_per_gpu_hr": 0.02,
        "offer_class": "interruptible",
@@ -159,7 +159,7 @@ curl -X POST https://compute.wick.pics/api/watches \
     <p>The response carries <code>order_secret</code> &mdash; shown once, it authenticates ticket reads and fills for this order only, and can rent nothing by itself. Three ways to execute when the ticket is cut:</p>
     <p><b>1. The keyholder sidecar</b> (recommended): a ~115-line open-source stdlib-Python daemon you run on your own machine &mdash; it long-polls the order, verifies the ticket's HMAC signature, and fires the fill with your key from your side. Every safety property is readable in one sitting, and it dry-runs by default:</p>
 <pre><span class="c"># fetch it, read it, run it — stdlib only, no installs</span>
-curl -sO https://compute.wick.pics/sidecar/keyholder.py
+curl -sO https://compute.pangle.online/sidecar/keyholder.py
 ORDER_ID=&lt;id&gt; ORDER_SECRET=&lt;secret&gt; PROVIDER_KEY=&lt;your vast/runpod key&gt; \
   python3 keyholder.py          <span class="c"># dry-runs until you add CONFIRM=1</span></pre>
     <p><b>A real pass, replayed.</b> The loop above, run against the live book on 2026&#8209;08&#8209;24 (dry-run; the order's line sat above the market, so the ticket cut on the next check):</p>

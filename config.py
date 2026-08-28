@@ -58,5 +58,5 @@ REF_RUNPOD = os.environ.get("REF_RUNPOD", "")
 
 DB_PATH = os.environ.get("DB_PATH") or os.path.join(BASE_DIR, "data", "compute.db")
 
-USER_AGENT = "compute.wick.pics aggregator (contact: site)"
+USER_AGENT = "compute.pangle.online aggregator (contact: site)"
 HTTP_TIMEOUT = 20.0

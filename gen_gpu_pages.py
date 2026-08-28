@@ -4,7 +4,7 @@ Run: venv/bin/python gen_gpu_pages.py   (hourly timer: compute-gpu-pages.timer)"
 import json, re, time, urllib.request, pathlib, html
 
 BASE = "http://127.0.0.1:8956"
-SITE = "https://compute.wick.pics"
+SITE = "https://compute.pangle.online"
 ROOT = pathlib.Path(__file__).parent / "web"
 TOP_N = 20
 
@@ -140,7 +140,7 @@ def page(g, all_pairs):
 <meta property="og:image" content="{SITE}/og.png">
 <meta property="og:url" content="{SITE}/gpu/{slug}/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="compute.wick.pics">
+<meta property="og:site_name" content="compute.pangle.online">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{json.dumps(ld, separators=(",", ":"))}</script>
 <style>{CSS}</style>
@@ -162,7 +162,7 @@ def page(g, all_pairs):
   <p class="api">Raw: <a href="/api/offers?gpu={qm}">offers</a> · <a href="/api/history?gpu={qm}">history</a> · <a href="/api/timing?gpu={qm}">timing</a> · <a href="/api/spread?gpu={qm}">spread</a> — JSON, no key.</p>
   <div class="mesh">Other GPUs: {mesh}</div>
 </main>
-<footer><div class="wrap">compute.wick.pics — the spot market for idle GPUs · zero platform fees · <a href="/faq/">fair questions</a> · <a href="/llms.txt">llms.txt</a></div></footer>
+<footer><div class="wrap">compute.pangle.online — the spot market for idle GPUs · zero platform fees · <a href="/faq/">fair questions</a> · <a href="/llms.txt">llms.txt</a></div></footer>
 <script>
 (function(){{
   var M={json.dumps(m)};
@@ -281,7 +281,7 @@ def vs_page(a, b):
 <meta property="og:image" content="{SITE}/og.png">
 <meta property="og:url" content="{SITE}/vs/{slug}/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="compute.wick.pics">
+<meta property="og:site_name" content="compute.pangle.online">
 <meta name="twitter:card" content="summary_large_image">
 <style>{VS_CSS}</style>
 </head>
@@ -302,7 +302,7 @@ def vs_page(a, b):
   </div>
   <div class="mesh">Other classics: {mesh}</div>
 </main>
-<footer><div class="wrap">compute.wick.pics \u2014 the spot market for idle GPUs \u00b7 <a href="/faq/">fair questions</a> \u00b7 <a href="/llms.txt">llms.txt</a></div></footer>
+<footer><div class="wrap">compute.pangle.online \u2014 the spot market for idle GPUs \u00b7 <a href="/faq/">fair questions</a> \u00b7 <a href="/llms.txt">llms.txt</a></div></footer>
 </body>
 </html>
 """
@@ -329,7 +329,7 @@ items = "\n".join(
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GPU rental prices by model — compute.wick.pics</title>
+<title>GPU rental prices by model — compute.pangle.online</title>
 <meta name="description" content="Live rental price pages for every major GPU model — best idle and on-demand price, history, and free price alerts across {nfeeds} marketplaces.">
 <link rel="canonical" href="{SITE}/gpu/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -338,7 +338,7 @@ items = "\n".join(
 <meta property="og:image" content="{SITE}/og.png">
 <meta property="og:url" content="{SITE}/gpu/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="compute.wick.pics">
+<meta property="og:site_name" content="compute.pangle.online">
 <meta name="twitter:card" content="summary_large_image">
 <style>{CSS}
 ul{{list-style:none;margin-top:30px;border-top:1px solid var(--hair)}}
@@ -356,7 +356,7 @@ li span{{float:right;font-family:var(--mono);font-size:.72rem;color:var(--ink2);
   <h2 style="font-family:var(--serif);font-weight:600;font-size:1.4rem;margin-top:54px">Classic comparisons.</h2>
   <div class="mesh" style="margin-top:14px">{vs_mesh}</div>
 </main>
-<footer><div class="wrap">compute.wick.pics — the spot market for idle GPUs · zero platform fees</div></footer>
+<footer><div class="wrap">compute.pangle.online — the spot market for idle GPUs · zero platform fees</div></footer>
 </body>
 </html>""")
 

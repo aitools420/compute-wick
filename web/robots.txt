@@ -1,6 +1,6 @@
-# compute.wick.pics — humans and machines both welcome.
-# Machine guide: https://compute.wick.pics/llms.txt
-# API (no key): https://compute.wick.pics/api/openapi.json
+# compute.pangle.online — humans and machines both welcome.
+# Machine guide: https://compute.pangle.online/llms.txt
+# API (no key): https://compute.pangle.online/api/openapi.json
 
 User-agent: *
 Allow: /
@@ -27,4 +27,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://compute.wick.pics/sitemap.xml
+Sitemap: https://compute.pangle.online/sitemap.xml

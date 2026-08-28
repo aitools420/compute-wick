@@ -1,4 +1,4 @@
-# keyholder — execute compute.wick.pics limit orders without giving anyone your key
+# keyholder — execute compute.pangle.online limit orders without giving anyone your key
 
 A limit order says "rent me a 4090 when idle price ≤ $0.02/hr". The station
 watches the market and cuts a signed fill ticket when your line is crossed —
@@ -6,7 +6,7 @@ but it never holds your provider key. This sidecar is the missing half: it
 runs on YOUR machine, holds YOUR key, and executes tickets automatically.
 
     # 1. place the order (no key involved)
-    curl -X POST https://compute.wick.pics/api/orders \
+    curl -X POST https://compute.pangle.online/api/orders \
       -H 'content-type: application/json' \
       -d '{"gpu":"RTX 4090","max_price_per_gpu_hr":0.02,"offer_class":"interruptible"}'
     # -> note order.id and order.order_secret (shown once)

@@ -1,4 +1,4 @@
-# DESIGN.md — compute.wick.pics (recorded from the shipped build, 2026-08-23)
+# DESIGN.md — compute.pangle.online (recorded from the shipped build, 2026-08-23)
 
 ## The world
 A field station at the edge of a pond, at night. Everything follows from that one

@@ -174,7 +174,7 @@ def create_watch(gpu: str, max_price_per_gpu_hr: float,
                            cls=offer_class or None, webhook_url=webhook_url or None)
     except ValueError as e:
         return {"error": str(e)}
-    w["feed_url"] = f"https://compute.wick.pics/api/watches/{w['id']}/feed"
+    w["feed_url"] = f"https://compute.pangle.online/api/watches/{w['id']}/feed"
     return w
 
 @mcp.tool()

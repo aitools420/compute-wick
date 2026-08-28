@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>compute.wick.pics: the spot market for idle GPUs</title>
+<title>compute.pangle.online: the spot market for idle GPUs</title>
 <meta name="description" content="Live GPU rental prices aggregated across marketplaces, ranked, and routed toward idle hardware. Zero platform fees. Built for humans and AI agents.">
-<link rel="canonical" href="https://compute.wick.pics/">
+<link rel="canonical" href="https://compute.pangle.online/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta property="og:title" content="compute.wick.pics">
+<meta property="og:title" content="compute.pangle.online">
 <meta property="og:description" content="The spot market for idle GPUs. Live prices, ranked. Zero platform fees. Agents welcome.">
-<meta property="og:image" content="https://compute.wick.pics/og.png">
-<meta property="og:url" content="https://compute.wick.pics/">
+<meta property="og:image" content="https://compute.pangle.online/og.png">
+<meta property="og:url" content="https://compute.pangle.online/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="compute.wick.pics">
+<meta property="og:site_name" content="compute.pangle.online">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/erode-600.woff2" crossorigin>
 <style>
@@ -327,21 +327,21 @@ footer{padding:56px 0 64px;border-top:1px solid var(--hair)}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"WebSite","name":"compute.wick.pics","alternateName":"The spot market for idle GPUs",
-  "url":"https://compute.wick.pics/",
+ {"@type":"WebSite","name":"compute.pangle.online","alternateName":"The spot market for idle GPUs",
+  "url":"https://compute.pangle.online/",
   "description":"Live GPU rental prices aggregated across marketplaces, normalized to price per GPU-hour, ranked cheapest-first. Zero platform fees. Built for humans and AI agents."},
- {"@type":"WebAPI","name":"compute.wick.pics market API",
-  "url":"https://compute.wick.pics/api/offers",
-  "documentation":"https://compute.wick.pics/agents/",
+ {"@type":"WebAPI","name":"compute.pangle.online market API",
+  "url":"https://compute.pangle.online/api/offers",
+  "documentation":"https://compute.pangle.online/agents/",
   "description":"Keyless JSON API and native MCP endpoint over the live GPU spot market: offers, stats, price history, perf-per-dollar, reliability, price alerts, and BYO-key rental execution. OpenAPI at /api/openapi.json.",
-  "provider":{"@type":"Organization","name":"compute.wick.pics","url":"https://compute.wick.pics/"}},
+  "provider":{"@type":"Organization","name":"compute.pangle.online","url":"https://compute.pangle.online/"}},
  {"@type":"Dataset","name":"GPU rental price history (per model, per provider)",
   "description":"Best and median USD price per GPU-hour for each GPU model on each provider feed, recorded every 30 minutes. Idle-capacity share recorded alongside.",
-  "url":"https://compute.wick.pics/",
+  "url":"https://compute.pangle.online/",
   "isAccessibleForFree":true,
-  "creator":{"@type":"Organization","name":"compute.wick.pics"},
-  "distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://compute.wick.pics/api/history?gpu=RTX%204090"},
-                  {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://compute.wick.pics/api/idle-history"}]}
+  "creator":{"@type":"Organization","name":"compute.pangle.online"},
+  "distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://compute.pangle.online/api/history?gpu=RTX%204090"},
+                  {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://compute.pangle.online/api/idle-history"}]}
 ]}
 </script>
 </head>
@@ -614,8 +614,8 @@ footer{padding:56px 0 64px;border-top:1px solid var(--hair)}
     <p class="sub">The same ranked table behind this page is served as a clean JSON API and a native MCP endpoint. No key, no signup, no scraping required. Copy-paste configs for Claude Code, Claude Desktop, Python and LangChain live in the <a href="/agents/">integration guide</a>.</p>
 
     <div class="codepanel rv">
-      <div class="bar"><span>REST</span><button class="copy" data-copy="curl 'https://compute.wick.pics/api/offers?gpu=4090&max_price=0.30'">Copy</button></div>
-      <pre>curl 'https://compute.wick.pics/api/offers?gpu=4090&amp;max_price=0.30'
+      <div class="bar"><span>REST</span><button class="copy" data-copy="curl 'https://compute.pangle.online/api/offers?gpu=4090&max_price=0.30'">Copy</button></div>
+      <pre>curl 'https://compute.pangle.online/api/offers?gpu=4090&amp;max_price=0.30'
 
 <span class="c">{ "count": 4, "fee_bps": <span class="a">0</span>, "offers": [
   { "gpu_model": "RTX 4090", "price_per_gpu_hr": 0.202,
@@ -625,8 +625,8 @@ footer{padding:56px 0 64px;border-top:1px solid var(--hair)}
     </div>
 
     <div class="codepanel rv">
-      <div class="bar"><span>MCP</span><button class="copy" data-copy="https://compute.wick.pics/mcp/">Copy</button></div>
-      <pre>endpoint  <span class="a">https://compute.wick.pics/mcp/</span>   <span class="c">(streamable HTTP)</span>
+      <div class="bar"><span>MCP</span><button class="copy" data-copy="https://compute.pangle.online/mcp/">Copy</button></div>
+      <pre>endpoint  <span class="a">https://compute.pangle.online/mcp/</span>   <span class="c">(streamable HTTP)</span>
 
 tools     <span class="g">search_offers</span>   gpu, country, offer_class, max_price_per_gpu_hr
           <span class="g">get_offer</span>       one offer by id
@@ -654,7 +654,7 @@ tools     <span class="g">search_offers</span>   gpu, country, offer_class, max_
 <footer>
   <div class="wrap foot">
     <div>
-      <div>compute.wick.pics</div>
+      <div>compute.pangle.online</div>
       <div>photography via Pexels, licensed for commercial use</div>
     </div>
     <nav class="pillnav" aria-label="Everything on the station">

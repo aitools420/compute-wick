@@ -1,4 +1,4 @@
-# PRODUCT.md — compute.wick.pics
+# PRODUCT.md — compute.pangle.online
 
 **What it is.** A live meta-aggregator for GPU rental compute. It polls marketplace
 inventory (Vast.ai, RunPod, DataCrunch, Akash), normalizes everything into one offer table,
